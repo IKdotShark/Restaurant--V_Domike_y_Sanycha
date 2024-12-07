@@ -1,25 +1,29 @@
 package com.test_task.restaurant.models;
 
 import jakarta.persistence.*;
-import java.math.BigDecimal;
 
 @Entity
 public class Drink {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 100)
+    @Column(nullable = false)
     private String name;
 
     @Column(nullable = false)
-    private BigDecimal price;
+    private double price;
 
     @Column(nullable = false)
-    private String volume; // Например, "500 мл"
+    private String volume;
 
-    @Column(nullable = false, length = 500)
+    @Column(nullable = false)
     private String description;
+
+    @ManyToOne
+    @JoinColumn(name = "menu_id")
+    private Menu menu;
 
     public Long getId() {
         return id;
@@ -37,11 +41,11 @@ public class Drink {
         this.name = name;
     }
 
-    public BigDecimal getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(BigDecimal price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
@@ -59,5 +63,13 @@ public class Drink {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Menu getMenu() {
+        return menu;
+    }
+
+    public void setMenu(Menu menu) {
+        this.menu = menu;
     }
 }

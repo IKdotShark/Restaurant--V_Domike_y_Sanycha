@@ -1,6 +1,7 @@
 package com.test_task.restaurant.models;
 
 import jakarta.persistence.*;
+import java.util.List;
 
 @Entity
 public class Menu {
@@ -9,17 +10,14 @@ public class Menu {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "dish_id", nullable = false)
-    private Dish dish;
+    @OneToMany(mappedBy = "menu", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Dish> dishes;
 
-    @ManyToOne
-    @JoinColumn(name = "drink_id", nullable = false)
-    private Drink drink;
+    @OneToMany(mappedBy = "menu", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Drink> drinks;
 
-    @ManyToOne
-    @JoinColumn(name = "desert_id", nullable = false)
-    private Desert desert;
+    @OneToMany(mappedBy = "menu", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Desert> deserts;
 
     public Long getId() {
         return id;
@@ -29,19 +27,27 @@ public class Menu {
         this.id = id;
     }
 
-    public Dish getDish() {
-        return dish;
+    public List<Dish> getDishes() {
+        return dishes;
     }
 
-    public void setDish(Dish dish) {
-        this.dish = dish;
+    public void setDishes(List<Dish> dishes) {
+        this.dishes = dishes;
     }
 
-    public Drink getDrink() {
-        return drink;
+    public List<Drink> getDrinks() {
+        return drinks;
     }
 
-    public void setDrink(Drink drink) {
-        this.drink = drink;
+    public void setDrinks(List<Drink> drinks) {
+        this.drinks = drinks;
+    }
+
+    public List<Desert> getDeserts() {
+        return deserts;
+    }
+
+    public void setDeserts(List<Desert> deserts) {
+        this.deserts = deserts;
     }
 }

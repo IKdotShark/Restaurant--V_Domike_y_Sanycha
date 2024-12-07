@@ -17,6 +17,9 @@ public class Desert {
     private String ingredients;
     @Column(nullable = false)
     private String description;
+    @ManyToOne
+    @JoinColumn(name = "menu_id")
+    private Menu menu;
 
     public Long getId() {
         return id;

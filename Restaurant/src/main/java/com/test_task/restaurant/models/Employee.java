@@ -1,6 +1,7 @@
 package com.test_task.restaurant.models;
 
 import jakarta.persistence.*;
+import java.util.Set;
 
 @Entity
 public class Employee {
@@ -12,6 +13,9 @@ public class Employee {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private StaffRole staffRole;
+
+    @ManyToMany(mappedBy = "employees")
+    private Set<Orders> orders;
 
     public enum StaffRole {
         COOKER,
@@ -36,5 +40,13 @@ public class Employee {
 
     public void setStaffRole(StaffRole staffRole) {
         this.staffRole = staffRole;
+    }
+
+    public Set<Orders> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(Set<Orders> orders) {
+        this.orders = orders;
     }
 }

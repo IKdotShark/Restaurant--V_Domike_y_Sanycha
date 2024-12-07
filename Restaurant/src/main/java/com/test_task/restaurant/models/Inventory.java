@@ -16,6 +16,10 @@ public class Inventory {
     private int quantity; // Спросить Хлеба
     // mb ед.измерения
 
+    @ManyToOne
+    @JoinColumn(name = "supplier_id", nullable = false)
+    private Supplier supplier;
+
     public Long getId() {
         return id;
     }

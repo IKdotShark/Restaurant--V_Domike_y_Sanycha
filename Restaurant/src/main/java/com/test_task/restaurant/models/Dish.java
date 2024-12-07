@@ -11,12 +11,19 @@ public class Dish {
 
     @Column(nullable = false)
     private String name;
+
     @Column(nullable = false)
     private double price;
+
     @Column(nullable = false)
     private String ingredients;
+
     @Column(nullable = false)
     private String description;
+
+    @ManyToOne
+    @JoinColumn(name = "menu_id")
+    private Menu menu;
 
     public Long getId() {
         return id;
@@ -56,5 +63,13 @@ public class Dish {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Menu getMenu() {
+        return menu;
+    }
+
+    public void setMenu(Menu menu) {
+        this.menu = menu;
     }
 }
