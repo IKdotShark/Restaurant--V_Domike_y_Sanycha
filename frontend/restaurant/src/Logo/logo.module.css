@@ -1,0 +1,12 @@
+/* Logo */
+.logo_container {
+    display: flex;
+    justify-content: center;
+    padding-top: 200px;
+  }
+  
+  .logo_image {
+    width: 436px;
+    height: 450px;
+    border-radius: 20px;
+  }

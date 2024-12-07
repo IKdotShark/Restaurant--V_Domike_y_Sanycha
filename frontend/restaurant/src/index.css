@@ -1,0 +1,13 @@
+@font-face {
+  font-family: "Ermilov";
+  src: url(./fonts/Ermilov.ttf);
+}
+
+/* Body */
+body {
+  background: #FBEBCE;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+

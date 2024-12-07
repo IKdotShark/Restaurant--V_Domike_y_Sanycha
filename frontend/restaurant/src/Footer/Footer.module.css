@@ -1,0 +1,24 @@
+.footer {
+    background-color: #5B3624;
+    display: flex;
+    flex-direction: column;
+    padding: 2rem 5% 2rem 5%;
+    height: 31rem;
+    max-width: 100vw;
+    width: 90%;
+    color: #FFECC8;
+    font-family: "Ermilov", sans-serif;
+}
+footer h1{
+  padding-top: 2rem;
+}
+.copyright {
+  margin: 0;
+  background-color: #2E2E2E;
+  text-align: center;
+  color: white;
+  height: 20px;
+}
+.copyright p {
+  margin: 0;
+}
