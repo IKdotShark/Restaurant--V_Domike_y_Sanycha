@@ -11,6 +11,10 @@
     box-sizing: border-box; /* Учитываем padding в ширине */
   }
   
+.card:hover {
+    transform: scale(1.05);
+  }
+
   .image {
     width: 200px;
     height: 200px;
@@ -33,8 +37,8 @@
   }
   
   .button {
+    color: #FBEBCE;
     background: #5b3624;
-    color: #ffecc8;
     padding: 8px 16px;
     border: none;
     border-radius: 5px;
@@ -45,4 +49,54 @@
   .button:hover {
     background: #472b1e;
   }
-  
+
+/* Модальное окно */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal {
+  background: #ffecc8;
+  padding: 20px;
+  border-radius: 8px;
+  width: 400px;
+  max-width: 90%;
+  text-align: center;
+}
+
+.modalTitle {
+  font-size: 20px;
+  margin-bottom: 10px;
+  font-family: "Ermilov", sans-serif;
+}
+
+.modalDescription {
+  font-size: 16px;
+  color: #555;
+  font-family: "Arial", sans-serif;
+}
+
+.closeButton {
+  margin-top: 20px;
+  padding: 8px 12px;
+  border: none;
+  background-color: #5b3624;
+  color: #FBEBCE;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  font-family: "Ermilov", sans-serif;
+}
+
+.closeButton:hover {
+  background-color: #3e2518;
+}

@@ -1,4 +1,3 @@
-// src/mockdata.js
 export const Images = {
     logo: './src/assets/logo_text.png',
     burger: './src/assets/burger.png',
