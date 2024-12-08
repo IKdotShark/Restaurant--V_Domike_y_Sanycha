@@ -21,6 +21,10 @@ public class EmployeeService {
         return employeeRepository.save(employee);
     }
 
+    public Employee updateEmployee(Employee employee) {
+        return employeeRepository.save(employee);
+    }
+
     public Employee findEmployeeById(Long id) {
         return employeeRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Not found employee with such id: " + id));
@@ -28,6 +32,10 @@ public class EmployeeService {
 
     public List<Employee> findAllEmployees() {
         return employeeRepository.findAll();
+    }
+
+    public List<Employee> findEmployeesByRole(Employee.StaffRole role) {
+        return employeeRepository.findByStaffRole(role);
     }
 
     public void deleteEmployeeById(Long id) {

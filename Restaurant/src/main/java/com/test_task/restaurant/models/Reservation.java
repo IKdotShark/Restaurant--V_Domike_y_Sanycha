@@ -67,4 +67,12 @@ public class Reservation {
     public void setReservationDate(LocalDateTime reservationDate) {
         this.reservationDate = reservationDate;
     }
+
+    public Hall getHall() {
+        return hall;
+    }
+
+    public void setHall(Hall hall) {
+        this.hall = hall;
+    }
 }

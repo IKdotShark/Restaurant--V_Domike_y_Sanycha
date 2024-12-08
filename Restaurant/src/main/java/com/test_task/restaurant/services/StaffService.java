@@ -21,6 +21,25 @@ public class StaffService {
         return staffRepository.save(staff);
     }
 
+    public Staff updateStaff(Long id, Staff staffInfo) {
+        Staff existingStaff = findStaffById(id);
+
+        if (staffInfo.getName() != null) {
+            existingStaff.setName(staffInfo.getName());
+        }
+        if (staffInfo.getSurName() != null) {
+            existingStaff.setSurName(staffInfo.getSurName());
+        }
+        if (staffInfo.getPhoneNumber() != null) {
+            existingStaff.setPhoneNumber(staffInfo.getPhoneNumber());
+        }
+        if (staffInfo.getEmployee() != null) {
+            existingStaff.setEmployee(staffInfo.getEmployee());
+        }
+
+        return staffRepository.save(existingStaff);
+    }
+
     public Staff findStaffById(Long id) {
         return staffRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Not found staff with such id: " + id));

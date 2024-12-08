@@ -43,4 +43,12 @@ public class Inventory {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
+
+    public Supplier getSupplier() {
+        return supplier;
+    }
+
+    public void setSupplier(Supplier supplier) {
+        this.supplier = supplier;
+    }
 }

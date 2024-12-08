@@ -5,6 +5,7 @@ import com.test_task.restaurant.models.Reservation;
 import com.test_task.restaurant.repositories.ReservationRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,6 +29,33 @@ public class ReservationService {
 
     public List<Reservation> findAllReservations() {
         return reservationRepository.findAll();
+    }
+
+    public List<Reservation> findByHall(Reservation.Hall hall) {
+        return reservationRepository.findByHall(hall);
+    }
+
+    public List<Reservation> findByClient(Long clientId) {
+        return reservationRepository.findByClientId(clientId);
+    }
+
+    public List<Reservation> findByReservationDate(LocalDateTime date) {
+        return reservationRepository.findByReservationDate(date);
+    }
+
+    public Reservation updateReservation(Long id, Reservation reservation) {
+        validateReservation(reservation);
+        Reservation existingReservation = findReservationById(id);
+        existingReservation.setReservationDate(reservation.getReservationDate());
+        existingReservation.setClient(reservation.getClient());
+        existingReservation.setHall(reservation.getHall());
+        return reservationRepository.save(existingReservation);
+    }
+
+    private void validateReservation(Reservation reservation) {
+        if (reservation.getReservationDate().isBefore(LocalDateTime.now())) {
+            throw new IllegalArgumentException("Reservation date must be in the future.");
+        }
     }
 
     public void deleteReservationById(Long id) {

@@ -21,7 +21,7 @@ public class ClientService {
         return clientRepository.save(client);
     }
 
-    private Client findClientById(Long id) {
+    public Client findClientById(Long id) {
         return clientRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Not found client with such " + id));
     }

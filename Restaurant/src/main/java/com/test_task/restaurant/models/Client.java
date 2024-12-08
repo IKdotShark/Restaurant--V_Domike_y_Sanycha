@@ -65,4 +65,12 @@ public class Client {
     public void setBirthday(LocalDate birthday) {
         this.birthday = birthday;
     }
+
+    public LoyaltyProgramm getBonusCard() {
+        return bonusCard;
+    }
+
+    public void setBonusCard(LoyaltyProgramm bonusCard) {
+        this.bonusCard = bonusCard;
+    }
 }

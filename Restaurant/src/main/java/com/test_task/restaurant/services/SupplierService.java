@@ -21,6 +21,19 @@ public class SupplierService {
         return supplierRepository.save(supplier);
     }
 
+    public Supplier updateSupplier(Long id, Supplier supplierDetails) {
+        Supplier supplier = findSupplierById(id);
+
+        if (supplierDetails.getName() != null) {
+            supplier.setName(supplierDetails.getName());
+        }
+        if (supplierDetails.getContactInfo() != null) {
+            supplier.setContactInfo(supplierDetails.getContactInfo());
+        }
+
+        return supplierRepository.save(supplier);
+    }
+
     public Supplier findSupplierById(Long id) {
         return supplierRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Not found supplier with such id: " + id));
@@ -34,5 +47,9 @@ public class SupplierService {
         Optional<Supplier> supplier = supplierRepository.findById(id);
         if (supplier.isEmpty()) throw new ResourceNotFoundException("Not found supplier with such id: " + id);
         supplierRepository.deleteById(id);
+    }
+
+    public List<Supplier> findByName(String name) {
+        return supplierRepository.findByNameContainingIgnoreCase(name);
     }
 }

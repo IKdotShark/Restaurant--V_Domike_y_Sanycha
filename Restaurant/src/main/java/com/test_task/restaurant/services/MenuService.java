@@ -6,7 +6,7 @@ import com.test_task.restaurant.repositories.MenuRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class MenuService {
@@ -30,9 +30,41 @@ public class MenuService {
         return menuRepository.findAll();
     }
 
+    public List<Menu> findAllItemsByCategory(String category) {
+        if (category == null) {
+            return findAllMenus();
+        }
+
+        return switch (category.toLowerCase()) {
+            case "dishes" -> findMenusWithDishes();
+            case "drinks" -> findMenusWithDrinks();
+            case "deserts" -> findMenusWithDeserts();
+            default -> throw new IllegalArgumentException("Invalid category: " + category);
+        };
+    }
+
+    private List<Menu> findMenusWithDishes() {
+        return findAllMenus().stream()
+                .filter(menu -> !menu.getDishes().isEmpty())
+                .collect(Collectors.toList());
+    }
+
+    private List<Menu> findMenusWithDrinks() {
+        return findAllMenus().stream()
+                .filter(menu -> !menu.getDrinks().isEmpty())
+                .collect(Collectors.toList());
+    }
+
+    private List<Menu> findMenusWithDeserts() {
+        return findAllMenus().stream()
+                .filter(menu -> !menu.getDeserts().isEmpty())
+                .collect(Collectors.toList());
+    }
+
     public void deleteMenuById(Long id) {
-        Optional<Menu> menu = menuRepository.findById(id);
-        if (menu.isEmpty()) throw new ResourceNotFoundException("Not found menu with such id: " + id);
+        if (!menuRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Not found menu with such id: " + id);
+        }
         menuRepository.deleteById(id);
     }
 }

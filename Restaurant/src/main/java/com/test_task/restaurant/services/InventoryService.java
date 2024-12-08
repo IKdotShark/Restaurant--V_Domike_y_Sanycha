@@ -21,9 +21,27 @@ public class InventoryService {
         return inventoryRepository.save(inventory);
     }
 
+    public Inventory updateInventory(Long id, Inventory inventoryDetails) {
+        Inventory inventory = findInventoryById(id);
+
+        if (inventoryDetails.getProductName() != null) {
+            inventory.setProductName(inventoryDetails.getProductName());
+        }
+        if (inventoryDetails.getQuantity() > 0) {
+            inventory.setQuantity(inventoryDetails.getQuantity());
+        }
+        inventory.setSupplier(inventoryDetails.getSupplier());
+
+        return inventoryRepository.save(inventory);
+    }
+
     public Inventory findInventoryById(Long id) {
         return inventoryRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Not found inventory with such id: " + id));
+    }
+
+    public List<Inventory> findByProductName(String productName) {
+        return inventoryRepository.findByProductNameContainingIgnoreCase(productName);
     }
 
     public List<Inventory> findAllInventories() {
