@@ -16,6 +16,8 @@ function ProductCard({ product }) {
     e.stopPropagation(); // Остановить распространение клика вверх по DOM
   };
 
+  const ingredientsArray = product.ingredients.map((ingredient) => <li key={ingredient}>{ingredient}</li>);
+
   return (
     <>
       {/* Карточка продукта */}
@@ -38,6 +40,7 @@ function ProductCard({ product }) {
             <p className={styles.modalDescription}>
               {product.description || 'Описание отсутствует'}
             </p>
+            <ul className={styles.modalIngredients}>{ingredientsArray}</ul>
             <p className={styles.price}>{product.price} ₽</p>
             <button className={styles.button} onClick={handleBasketClick}>
               В корзину

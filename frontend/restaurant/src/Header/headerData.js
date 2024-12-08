@@ -1,6 +1,7 @@
 export const Images = {
     logo: './src/assets/logo_text.png',
     burger: './src/assets/burger.png',
+    cross: './src/assets/cross.png',
   };
   
   export const Texts = {

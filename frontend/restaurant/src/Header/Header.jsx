@@ -1,26 +1,24 @@
 import React, { useState } from 'react';
 import styles from "./header.module.css";
 import { Images, Texts } from './headerData';
+import { Titles } from '../Products/productData';
 
-function Header() {
+function Header({ scrollToSection, refs }) {
   const [isMenuOpen, setMenuOpen] = useState(false);
 
-  // Функция переключения меню
   const toggleMenu = () => {
     setMenuOpen((prev) => !prev);
   };
 
-  // Переход по пути и закрытие меню
-  const handleNavigation = (path) => {
-    window.location.href = path;
-    setMenuOpen(false);
+  const logoClick = () => {
+    window.location.href = '/';
   };
 
   return (
     <>
-      {/* Основной хедер */}
       <header className={styles.header}>
         <img
+          onClick={logoClick}
           className={styles.header_logo}
           src={Images.logo}
           alt="Logo"
@@ -28,28 +26,35 @@ function Header() {
         <p className={styles.header_text}>{Texts.address}</p>
         <p className={styles.header_text}>{Texts.phone}</p>
         <p className={styles.header_text}>{Texts.delivery}</p>
-
-        {/* Кнопка-бургер */}
+        {/* Бургер-кнопка, изменяющаяся на крестик */}
         <img
           onClick={toggleMenu}
           className={styles.header_burger}
-          src={Images.burger}
-          alt="Burger"
+          src={isMenuOpen ? Images.cross : Images.burger}
+          alt={isMenuOpen ? "Close Menu" : "Open Menu"}
         />
       </header>
 
-      {/* Оверлэй и меню */}
+      {/* Оверлей меню */}
       {isMenuOpen && (
         <div className={styles.overlay} onClick={toggleMenu}>
           <div
             className={styles.menu}
-            onClick={(e) => e.stopPropagation()} // Предотвращаем закрытие меню при клике по нему
+            onClick={(e) => e.stopPropagation()}
           >
             <ul className={styles.menuList}>
-              <li onClick={() => handleNavigation('')}>Специальные предложения</li>
-              <li onClick={() => handleNavigation('')}>Блюда</li>
-              <li onClick={() => handleNavigation('')}>Десерты</li>
-              <li onClick={() => handleNavigation('')}>Напитки</li>
+              <li onClick={() => { toggleMenu(); scrollToSection(refs.specialOffersRef); }}>
+                {Titles.specialOffers}
+              </li>
+              <li onClick={() => { toggleMenu(); scrollToSection(refs.dishesRef); }}>
+                {Titles.dishes}
+              </li>
+              <li onClick={() => { toggleMenu(); scrollToSection(refs.dessertsRef); }}>
+                {Titles.desserts}
+              </li>
+              <li onClick={() => { toggleMenu(); scrollToSection(refs.drinksRef); }}>
+                {Titles.drinks}
+              </li>
             </ul>
           </div>
         </div>
