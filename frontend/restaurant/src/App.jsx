@@ -1,32 +1,30 @@
-import React, { useRef } from 'react';
+import React, { useRef } from "react";
 import Header from "./Header/Header";
 import Footer from "./Footer/Footer";
 import Logo from "./Logo/Logo";
-import ProductModule from './Products/ProductModule';
-import { Titles, specialOffers, dishes, desserts, drinks } from './Products/productData';
+import ProductModule from "./Products/ProductModule";
+import { Titles, specialOffers, dishes, desserts, drinks } from "./Products/productData";
+import Cart from "./Cart/Cart";
+import { CartProvider } from "./Cart/CartContext";
 
 function App() {
-  // Создаем рефы для каждой секции
   const specialOffersRef = useRef(null);
   const dishesRef = useRef(null);
   const dessertsRef = useRef(null);
   const drinksRef = useRef(null);
 
-  // Высота хедера (можно также вынести в переменную)
   const HEADER_HEIGHT = 128;
 
-  // Функция для прокрутки с учётом хедера
   const scrollToSection = (ref) => {
-    const sectionPosition = ref.current.offsetTop; // Позиция секции
+    const sectionPosition = ref.current.offsetTop;
     window.scrollTo({
-      top: sectionPosition - HEADER_HEIGHT, // Учитываем высоту хедера
+      top: sectionPosition - HEADER_HEIGHT,
       behavior: "smooth",
     });
   };
 
   return (
-    <>
-      {/* Передаем scrollToSection для навигации */}
+    <CartProvider>
       <Header
         scrollToSection={scrollToSection}
         refs={{
@@ -65,8 +63,9 @@ function App() {
           titleColor="black"
         />
       </div>
+      <Cart />
       <Footer />
-    </>
+    </CartProvider>
   );
 }
 
