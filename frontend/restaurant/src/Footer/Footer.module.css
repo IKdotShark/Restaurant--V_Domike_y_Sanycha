@@ -22,3 +22,9 @@ footer h1{
 .copyright p {
   margin: 0;
 }
+
+@media screen and (max-width: 602px) {
+  footer h1{
+    padding-top: 1rem;
+  }
+}

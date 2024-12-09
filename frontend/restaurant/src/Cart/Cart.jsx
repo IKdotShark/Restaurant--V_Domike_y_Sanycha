@@ -87,7 +87,7 @@ function Cart() {
       {isCartOpen && (
         <div className={styles.cartOverlay}>
           <div className={styles.cartContent}>
-            <h2>Корзина</h2>
+            <h2 className={styles.cartTitle}>Корзина</h2>
             <ul className={styles.cartList}>
               {cartItems.length > 0 ? (
                 cartItems.map((item) => (
@@ -95,32 +95,34 @@ function Cart() {
                     <div className={styles.productImage}>
                       <img src={item.image} alt={item.name} />
                     </div>
-                    <div className={styles.cartDetails}>
-                      <span>
-                        {item.name} x {item.quantity}
-                      </span>
-                      <div className={styles.quantityControls}>
-                        <button
-                          className={styles.controlButton}
-                          onClick={() => decreaseQuantity(item.id)}
-                        >
-                          -
-                        </button>
-                        <button
-                          className={styles.controlButton}
-                          onClick={() => increaseQuantity(item.id)}
-                        >
-                          +
-                        </button>
-                        <button
-                          className={styles.controlButton}
-                          onClick={() => removeFromCart(item.id)}
-                        >
-                          ✖
-                        </button>
+                    <div className={styles.itemPrice}>
+                      <div className={styles.cartDetails}>
+                        <span className={styles.cartItemTitle}>
+                          {item.name} x {item.quantity}
+                        </span>
+                        <div className={styles.quantityControls}>
+                          <button
+                            className={styles.controlButton}
+                            onClick={() => decreaseQuantity(item.id)}
+                          >
+                            -
+                          </button>
+                          <button
+                            className={styles.controlButton}
+                            onClick={() => increaseQuantity(item.id)}
+                          >
+                            +
+                          </button>
+                          <button
+                            className={styles.controlButton}
+                            onClick={() => removeFromCart(item.id)}
+                          >
+                            ✖
+                          </button>
+                        </div>
                       </div>
+                      <span>{item.price * item.quantity} ₽</span>
                     </div>
-                    <span>{item.price * item.quantity} ₽</span>
                   </li>
                 ))
               ) : (
@@ -128,7 +130,7 @@ function Cart() {
               )}
             </ul>
             <div className={styles.cartTotal}>
-              <strong>Итого ({calculateItemCount()} шт.):</strong> {calculateTotal()} ₽
+              <strong >Итого ({calculateItemCount()} шт.):</strong> {calculateTotal()} ₽
             </div>
 
             {/* Кнопка "Заказать" отображается только при наличии товаров в корзине */}
@@ -152,10 +154,13 @@ function Cart() {
       {isOrderModalOpen && (
         <div className={styles.orderModalOverlay}>
           <div className={styles.orderModal}>
-            <h2>Оформление заказа</h2>
+            <div className={styles.orderTitle}>
+            <h1>Оформление заказа</h1>
+            </div>
             <form className={styles.orderForm}>
+            <div className={styles.orderFormText}>
               <label>
-                Имя:
+                Имя: 
                 <input
                   type="text"
                   name="firstName"
@@ -164,7 +169,7 @@ function Cart() {
                 />
               </label>
               <label>
-                Фамилия:
+                Фамилия: 
                 <input
                   type="text"
                   name="lastName"
@@ -173,7 +178,7 @@ function Cart() {
                 />
               </label>
               <label>
-                Телефон:
+                Телефон: 
                 <input
                   type="tel"
                   placeholder="+7 999 999 99 99"
@@ -183,7 +188,7 @@ function Cart() {
                 />
               </label>
               <label>
-                Тип доставки:
+                Тип доставки: 
                 <select
                   name="deliveryType"
                   value={deliveryType}
@@ -206,6 +211,7 @@ function Cart() {
               )}
 
               {errorMessage && <p className={styles.errorMessage}>{errorMessage}</p>}
+              </div>
 
               <button
                 className={styles.paymentButton}

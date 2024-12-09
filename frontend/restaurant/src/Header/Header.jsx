@@ -23,9 +23,11 @@ function Header({ scrollToSection, refs }) {
           src={Images.logo}
           alt="Logo"
         />
+        <div className={styles.header_texts}>
         <p className={styles.header_text}>{Texts.address}</p>
         <p className={styles.header_text}>{Texts.phone}</p>
         <p className={styles.header_text}>{Texts.delivery}</p>
+        </div>
         {/* Бургер-кнопка, изменяющаяся на крестик */}
         <img
           onClick={toggleMenu}

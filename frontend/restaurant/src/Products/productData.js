@@ -102,6 +102,14 @@ export const drinks = [
     image: './src/assets/products/cake.png',
     description: 'Густой и насыщенный шоколадный коктейль.',
     ingredients: ['Молоко', 'Какао', 'Сахар', 'Шоколадная стружка']
+  },
+  {
+    id: 14,
+    name: 'Водка с квасом',
+    price: 150,
+    image: './src/assets/products/vodkakvas.jpg',
+    description: 'Спросите у батина',
+    ingredients: ['Водка', 'Квас']
   }
 ];
 

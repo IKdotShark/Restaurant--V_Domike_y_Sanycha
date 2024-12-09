@@ -18,7 +18,7 @@
   .image {
     width: 200px;
     height: 200px;
-    object-fit: contain;
+    object-fit: cover;
     margin-bottom: 12px;
     border-radius: 10px;
   }
@@ -68,7 +68,8 @@
   background-color: #f8e3c4; /* Светло-кремовый цвет */
   padding: 20px;
   border-radius: 12px;
-  width: 800px; /* Увеличенная ширина */
+  max-width: 800px; /* Увеличенная ширина */
+  width: 90vw;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
   display: flex;
   flex-direction: row; /* Горизонтальное выравнивание */
@@ -131,4 +132,17 @@
 
 .button:hover {
   background-color: #3e2b25;
+}
+
+
+@media screen and (max-width: 560px) {
+  .modal {
+    flex-direction: column;
+  }
+}
+
+@media screen and (max-width: 560px) {
+  .modal {
+    width: 85vw;
+  }
 }
