@@ -39,7 +39,7 @@ public class MenuService {
             case "dishes" -> findMenusWithDishes();
             case "drinks" -> findMenusWithDrinks();
             case "deserts" -> findMenusWithDeserts();
-            default -> throw new IllegalArgumentException("Invalid category: " + category);
+            default -> findAllMenus();
         };
     }
 

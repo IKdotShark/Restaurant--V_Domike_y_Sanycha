@@ -21,6 +21,9 @@ public class Dish {
     @Column(nullable = false)
     private String description;
 
+    @Column(name = "category")
+    private String category;
+
     @ManyToOne
     @JoinColumn(name = "menu_id")
     private Menu menu;
@@ -71,5 +74,13 @@ public class Dish {
 
     public void setMenu(Menu menu) {
         this.menu = menu;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 }

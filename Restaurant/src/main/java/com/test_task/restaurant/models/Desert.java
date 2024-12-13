@@ -17,6 +17,9 @@ public class Desert {
     private String ingredients;
     @Column(nullable = false)
     private String description;
+    @Column(name = "category")
+    private String category;
+
     @ManyToOne
     @JoinColumn(name = "menu_id")
     private Menu menu;
@@ -59,5 +62,21 @@ public class Desert {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public Menu getMenu() {
+        return menu;
+    }
+
+    public void setMenu(Menu menu) {
+        this.menu = menu;
     }
 }

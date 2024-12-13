@@ -20,6 +20,9 @@ public class Client {
     @Column(unique = true)
     private String email;
 
+    @Column()
+    private String adress;
+
     private LocalDate birthday;
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -72,5 +75,13 @@ public class Client {
 
     public void setBonusCard(LoyaltyProgramm bonusCard) {
         this.bonusCard = bonusCard;
+    }
+
+    public String getAdress() {
+        return adress;
+    }
+
+    public void setAdress(String adress) {
+        this.adress = adress;
     }
 }

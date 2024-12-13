@@ -39,11 +39,24 @@ public class ClientController {
     @PutMapping("/update/{id}")
     public ResponseEntity<Client> updateClient(@RequestBody Client clientInfo, @PathVariable Long id) {
         Client client = clientService.findClientById(id);
-        client.setName(clientInfo.getName());
-        client.setBirthday(clientInfo.getBirthday());
-        client.setContact(clientInfo.getContact());
-        client.setEmail(clientInfo.getEmail());
-        client.setBonusCard(clientInfo.getBonusCard());
+        if (clientInfo.getName() != null) {
+            client.setName(clientInfo.getName());
+        }
+        if (clientInfo.getBirthday() != null) {
+            client.setBirthday(clientInfo.getBirthday());
+        }
+        if (clientInfo.getContact() != null) {
+            client.setContact(clientInfo.getContact());
+        }
+        if (clientInfo.getEmail() != null) {
+            client.setEmail(clientInfo.getEmail());
+        }
+        if (clientInfo.getBonusCard() != null) {
+            client.setBonusCard(clientInfo.getBonusCard());
+        }
+        if (clientInfo.getAdress() != null) {
+            client.setAdress(clientInfo.getAdress());
+        }
         clientService.saveClient(client);
         return ResponseEntity.ok(client);
     }
