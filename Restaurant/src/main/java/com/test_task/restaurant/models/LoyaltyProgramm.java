@@ -31,6 +31,7 @@ public class LoyaltyProgramm {
         this.bonusCard = bonusCard;
     }
 
+
     public double getBalance() {
         return balance;
     }

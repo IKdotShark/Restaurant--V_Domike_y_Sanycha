@@ -35,4 +35,9 @@ public class ClientService {
         if (client.isEmpty()) throw new ResourceNotFoundException("Not found client with such " + id);
         clientRepository.deleteById(id);
     }
+
+    public Client findClientByBonusCardId(Long id) {
+        return clientRepository.findByBonusCardId(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Not found client by such card id" + id));
+    }
 }

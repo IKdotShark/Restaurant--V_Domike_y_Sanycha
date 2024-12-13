@@ -5,6 +5,7 @@ import com.test_task.restaurant.models.LoyaltyProgramm;
 import com.test_task.restaurant.repositories.LoyaltyProgrammRepository;
 import org.springframework.stereotype.Service;
 
+import java.security.SecureRandom;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,6 +13,7 @@ import java.util.Optional;
 public class LoyaltyProgrammService {
 
     private final LoyaltyProgrammRepository loyaltyProgrammRepository;
+    private static final SecureRandom random = new SecureRandom();
 
     public LoyaltyProgrammService(LoyaltyProgrammRepository loyaltyProgrammRepository) {
         this.loyaltyProgrammRepository = loyaltyProgrammRepository;
@@ -54,5 +56,17 @@ public class LoyaltyProgrammService {
         }
         program.setBalance(program.getBalance() - amount);
         return loyaltyProgrammRepository.save(program);
+    }
+
+    public String generateBonusCardNumber() {
+        return generateCardNumber();
+    }
+
+    private static String generateCardNumber() {
+        StringBuilder cardNumber = new StringBuilder(16);
+        for (int i = 0; i < 16; i++) {
+            cardNumber.append(random.nextInt(10));
+        }
+        return cardNumber.toString();
     }
 }
