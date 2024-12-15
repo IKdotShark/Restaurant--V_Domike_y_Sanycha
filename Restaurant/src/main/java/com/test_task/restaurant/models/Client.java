@@ -25,8 +25,9 @@ public class Client {
 
     private LocalDate birthday;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "bonus_card_id", referencedColumnName = "id")
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = true, orphanRemoval = true)
+    @JoinColumn(name = "bonus_card_id")
     private LoyaltyProgramm bonusCard;
 
     public Long getId() {

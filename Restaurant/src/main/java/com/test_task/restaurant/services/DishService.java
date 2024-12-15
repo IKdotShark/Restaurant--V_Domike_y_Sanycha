@@ -1,10 +1,12 @@
 package com.test_task.restaurant.services;
 
 import com.test_task.restaurant.exception.ResourceNotFoundException;
+import com.test_task.restaurant.models.Desert;
 import com.test_task.restaurant.models.Dish;
 import com.test_task.restaurant.repositories.DishRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,7 +29,12 @@ public class DishService {
     }
 
     public List<Dish> findDishesByIds(List<Long> ids) {
-        return dishRepository.findAllById(ids);
+        List<Dish> dishes = new ArrayList<>();
+        for (Long id : ids) {
+            Optional<Dish> dish = dishRepository.findById(id);
+            dish.ifPresent(dishes::add);
+        }
+        return dishes;
     }
 
     public List<Dish> findAllDishes() {
@@ -39,6 +46,4 @@ public class DishService {
         if (dish.isEmpty()) throw new ResourceNotFoundException("Not found dish with such " + id);
         dishRepository.deleteById(id);
     }
-
-
 }

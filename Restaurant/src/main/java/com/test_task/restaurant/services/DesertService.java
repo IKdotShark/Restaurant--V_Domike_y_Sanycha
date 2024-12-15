@@ -5,6 +5,8 @@ import com.test_task.restaurant.models.Desert;
 import com.test_task.restaurant.repositories.DesertRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,7 +29,12 @@ public class DesertService {
     }
 
     public List<Desert> findDesertsByIds(List<Long> ids) {
-        return desertRepository.findAllById(ids);
+        List<Desert> deserts = new ArrayList<>();
+        for (Long id : ids) {
+            Optional<Desert> desert = desertRepository.findById(id);
+            desert.ifPresent(deserts::add);
+        }
+        return deserts;
     }
 
     public List<Desert> findAllDeserts() {

@@ -1,10 +1,12 @@
 package com.test_task.restaurant.services;
 
 import com.test_task.restaurant.exception.ResourceNotFoundException;
+import com.test_task.restaurant.models.Desert;
 import com.test_task.restaurant.models.Drink;
 import com.test_task.restaurant.repositories.DrinkRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,7 +29,12 @@ public class DrinkService {
     }
 
     public List<Drink> findDrinksByIds(List<Long> ids) {
-        return drinkRepository.findAllById(ids);
+        List<Drink> drinks = new ArrayList<>();
+        for (Long id : ids) {
+            Optional<Drink> drink = drinkRepository.findById(id);
+            drink.ifPresent(drinks::add);
+        }
+        return drinks;
     }
 
     public List<Drink> findAllDrinks() {
