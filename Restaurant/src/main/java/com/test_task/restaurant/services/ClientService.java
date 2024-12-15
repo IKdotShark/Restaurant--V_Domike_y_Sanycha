@@ -40,4 +40,12 @@ public class ClientService {
         return clientRepository.findByBonusCardId(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Not found client by such card id" + id));
     }
+
+    public Client removeBonusCard(Long clientId) {
+        Client client = clientRepository.findById(clientId)
+                .orElseThrow(() -> new ResourceNotFoundException("Client not found with id: " + clientId));
+
+        client.setBonusCard(null);
+        return clientRepository.save(client);
+    }
 }

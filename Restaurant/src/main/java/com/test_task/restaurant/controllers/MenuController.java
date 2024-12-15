@@ -1,21 +1,34 @@
 package com.test_task.restaurant.controllers;
 
+import com.test_task.restaurant.models.Dish;
+import com.test_task.restaurant.models.Drink;
+import com.test_task.restaurant.models.Desert;
 import com.test_task.restaurant.models.Menu;
 import com.test_task.restaurant.services.MenuService;
+import com.test_task.restaurant.services.DishService;
+import com.test_task.restaurant.services.DrinkService;
+import com.test_task.restaurant.services.DesertService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/menu")
 public class MenuController {
 
     private final MenuService menuService;
+    private final DishService dishService;
+    private final DrinkService drinkService;
+    private final DesertService desertService;
 
-    public MenuController(MenuService menuService) {
+    public MenuController(MenuService menuService, DishService dishService, DrinkService drinkService, DesertService desertService) {
         this.menuService = menuService;
+        this.dishService = dishService;
+        this.drinkService = drinkService;
+        this.desertService = desertService;
     }
 
     @GetMapping("/{id}")
@@ -36,7 +49,21 @@ public class MenuController {
     }
 
     @PostMapping
-    public ResponseEntity<Menu> createMenu(@RequestBody Menu menu) {
+    public ResponseEntity<Menu> createMenu(@RequestBody Menu menuRequest) {
+        List<Long> dishesIds = menuRequest.getDishesIds();
+        List<Long> drinksIds = menuRequest.getDrinksIds();
+        List<Long> desertsIds = menuRequest.getDesertsIds();
+
+        Menu menu = new Menu();
+
+        menu.setDishesIds(dishesIds);
+        menu.setDrinksIds(drinksIds);
+        menu.setDesertsIds(desertsIds);
+
+        menu.setDishes(dishService.findDishesByIds(dishesIds));
+        menu.setDrinks(drinkService.findDrinksByIds(drinksIds));
+        menu.setDeserts(desertService.findDesertsByIds(desertsIds));
+
         Menu createdMenu = menuService.createMenu(menu);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdMenu);
     }
@@ -44,15 +71,17 @@ public class MenuController {
     @PutMapping("/update/{id}")
     public ResponseEntity<Menu> updateMenu(@RequestBody Menu menuInfo, @PathVariable Long id) {
         Menu menu = menuService.findMenuById(id);
-        menu.setDeserts(menuInfo.getDeserts());
-        menu.setDishes(menuInfo.getDishes());
-        menu.setDeserts(menuInfo.getDeserts());
+
+        menu.setDishesIds(menuInfo.getDishesIds());
+        menu.setDrinksIds(menuInfo.getDrinksIds());
+        menu.setDesertsIds(menuInfo.getDesertsIds());
+
         menuService.createMenu(menu);
         return ResponseEntity.ok(menu);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Menu> deleteMenu(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteMenu(@PathVariable Long id) {
         menuService.deleteMenuById(id);
         return ResponseEntity.noContent().build();
     }

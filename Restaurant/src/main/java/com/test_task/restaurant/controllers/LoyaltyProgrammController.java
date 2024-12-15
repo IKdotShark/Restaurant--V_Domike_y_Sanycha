@@ -79,10 +79,4 @@ public class LoyaltyProgrammController {
         loyaltyProgrammService.createLoyaltyProgram(loyaltyProgramm);
         return ResponseEntity.ok(loyaltyProgramm);
     }
-
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<LoyaltyProgramm> deleteLP(@PathVariable Long id) {
-        loyaltyProgrammService.deleteLoyaltyProgramById(id);
-        return ResponseEntity.noContent().build();
-    }
 }

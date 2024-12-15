@@ -26,6 +26,10 @@ public class DrinkService {
                 .orElseThrow(() -> new ResourceNotFoundException("Not found drink with such " + id));
     }
 
+    public List<Drink> findDrinksByIds(List<Long> ids) {
+        return drinkRepository.findAllById(ids);
+    }
+
     public List<Drink> findAllDrinks() {
         return drinkRepository.findAll();
     }

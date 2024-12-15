@@ -26,6 +26,10 @@ public class DesertService {
                 .orElseThrow(() -> new ResourceNotFoundException("Not found desert with such " + id));
     }
 
+    public List<Desert> findDesertsByIds(List<Long> ids) {
+        return desertRepository.findAllById(ids);
+    }
+
     public List<Desert> findAllDeserts() {
         return desertRepository.findAll();
     }

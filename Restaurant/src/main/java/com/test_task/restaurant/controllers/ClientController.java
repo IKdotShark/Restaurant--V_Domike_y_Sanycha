@@ -93,4 +93,10 @@ public class ClientController {
         clientService.deleteClientById(id);
         return ResponseEntity.noContent().build();
     }
+
+    @DeleteMapping("/{clientId}/delete/bonus-card")
+    public ResponseEntity<Client> removeBonusCard(@PathVariable Long clientId) {
+        Client updatedClient = clientService.removeBonusCard(clientId);
+        return ResponseEntity.ok(updatedClient);
+    }
 }

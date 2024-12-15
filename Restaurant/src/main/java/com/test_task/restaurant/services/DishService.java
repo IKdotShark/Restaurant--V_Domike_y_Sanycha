@@ -26,6 +26,10 @@ public class DishService {
                 .orElseThrow(() -> new ResourceNotFoundException("Not found dish with such " + id));
     }
 
+    public List<Dish> findDishesByIds(List<Long> ids) {
+        return dishRepository.findAllById(ids);
+    }
+
     public List<Dish> findAllDishes() {
         return dishRepository.findAll();
     }

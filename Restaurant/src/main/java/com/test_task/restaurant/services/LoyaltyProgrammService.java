@@ -37,12 +37,6 @@ public class LoyaltyProgrammService {
         return loyaltyProgrammRepository.findAll();
     }
 
-    public void deleteLoyaltyProgramById(Long id) {
-        Optional<LoyaltyProgramm> loyaltyProgram = loyaltyProgrammRepository.findById(id);
-        if (loyaltyProgram.isEmpty()) throw new ResourceNotFoundException("Not found loyalty program with such id: " + id);
-        loyaltyProgrammRepository.deleteById(id);
-    }
-
     public LoyaltyProgramm addBalance(Long id, double amount) {
         LoyaltyProgramm program = findLoyaltyProgramById(id);
         program.setBalance(program.getBalance() + amount);
