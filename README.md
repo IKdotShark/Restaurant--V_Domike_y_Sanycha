@@ -8,7 +8,7 @@
 >
 > Create server name Restaurant
 >
-> Create database postgres with user postgres
+> Create database postgres with user postgres/postgres
 
 > If u want u can change application.properties for u'r own database
 
