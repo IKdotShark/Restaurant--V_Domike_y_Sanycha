@@ -138,11 +138,17 @@
 @media screen and (max-width: 560px) {
   .modal {
     flex-direction: column;
+    width: 85vw;
+    max-height: 90vh;
   }
 }
 
-@media screen and (max-width: 425px) {
+@media screen and (max-height: 830px) and (max-width: 560px) {
+  .modalImage {
+    height: 35vh;
+    object-fit: contain;
+  }
   .modal {
-    width: 85vw;
+    gap: 0;
   }
 }
