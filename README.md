@@ -3,9 +3,13 @@
 # How to run project
 ## Backend
 > **Preparing for first run**
+> 
 > Activate postgresql (u can use pg admin)
+>
 > Create server name Restaurant
+>
 > Create database postgres with user postgres
+
 > If u want u can change application.properties for u'r own database
 
 
