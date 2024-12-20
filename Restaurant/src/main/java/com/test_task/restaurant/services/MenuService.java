@@ -1,10 +1,17 @@
 package com.test_task.restaurant.services;
 
 import com.test_task.restaurant.exception.ResourceNotFoundException;
+import com.test_task.restaurant.models.Desert;
+import com.test_task.restaurant.models.Dish;
+import com.test_task.restaurant.models.Drink;
 import com.test_task.restaurant.models.Menu;
+import com.test_task.restaurant.repositories.DesertRepository;
+import com.test_task.restaurant.repositories.DishRepository;
+import com.test_task.restaurant.repositories.DrinkRepository;
 import com.test_task.restaurant.repositories.MenuRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -12,13 +19,18 @@ import java.util.stream.Collectors;
 public class MenuService {
 
     private final MenuRepository menuRepository;
+    private final DishService dishService;
+    private final DesertService desertService;
+    private final DrinkService drinkService;
 
-    public MenuService(MenuRepository menuRepository) {
+    public MenuService(MenuRepository menuRepository,
+                       DishService dishService,
+                       DesertService desertService,
+                       DrinkService drinkService) {
         this.menuRepository = menuRepository;
-    }
-
-    public Menu createMenu(Menu menu) {
-        return menuRepository.save(menu);
+        this.dishService = dishService;
+        this.desertService = desertService;
+        this.drinkService = drinkService;
     }
 
     public Menu findMenuById(Long id) {
@@ -61,10 +73,57 @@ public class MenuService {
                 .collect(Collectors.toList());
     }
 
+    public void settingMenuId(Menu menu) {
+        List<Dish> dishes = menu.getDishes();
+        List<Drink> drinks = menu.getDrinks();
+        List<Desert> deserts = menu.getDeserts();
+
+        dishes.forEach(dish -> dish.setMenuId(menu.getId()));
+        drinks.forEach(drink -> drink.setMenuId(menu.getId()));
+        deserts.forEach(desert -> desert.setMenuId(menu.getId()));
+    }
+
+    public Menu createMenu(Menu menuRequest) {
+
+        List<Long> dishesIds = menuRequest.getDishesIds();
+        List<Long> drinksIds = menuRequest.getDrinksIds();
+        List<Long> desertsIds = menuRequest.getDesertsIds();
+
+        Menu menu = Menu.getInstance();
+
+        menu.setDishesIds(dishesIds);
+        menu.setDrinksIds(drinksIds);
+        menu.setDesertsIds(desertsIds);
+
+        menu.setDishes(dishService.findDishesByIds(dishesIds));
+        menu.setDrinks(drinkService.findDrinksByIds(drinksIds));
+        menu.setDeserts(desertService.findDesertsByIds(desertsIds));
+
+        settingMenuId(menu);
+
+        return menuRepository.save(menu);
+    }
+
     public void deleteMenuById(Long id) {
         if (!menuRepository.existsById(id)) {
             throw new ResourceNotFoundException("Not found menu with such id: " + id);
         }
         menuRepository.deleteById(id);
+    }
+
+    public void convertStringIngrToArray(Menu menu) {
+        menu.getDishes().forEach(dish -> {
+            if (dish.getIngredients() != null && !dish.getIngredients().isEmpty()) {
+                List<String> ingredientsList = Arrays.asList(dish.getIngredients().split(","));
+                dish.setTransientIngredients(ingredientsList);
+            }
+        });
+
+        menu.getDeserts().forEach(desert -> {
+            if (desert.getIngredients() != null && !desert.getIngredients().isEmpty()) {
+                List<String> ingredientsList = Arrays.asList(desert.getIngredients().split(","));
+                desert.setTransientIngredients(ingredientsList);
+            }
+        });
     }
 }

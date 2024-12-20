@@ -1,5 +1,6 @@
 package com.test_task.restaurant.models;
 
+import jakarta.annotation.Resource;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;

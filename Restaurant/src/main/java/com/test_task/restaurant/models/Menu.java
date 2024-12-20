@@ -28,6 +28,17 @@ public class Menu {
     @OneToMany(mappedBy = "menu", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Desert> deserts;
 
+    private Menu() {
+    }
+
+    private static final class InstanceHolder {
+        private static final Menu instance = new Menu();
+    }
+
+    public static Menu getInstance() {
+        return InstanceHolder.instance;
+    }
+
     public Long getId() {
         return id;
     }

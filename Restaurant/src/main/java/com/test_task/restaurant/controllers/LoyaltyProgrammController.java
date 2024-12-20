@@ -43,7 +43,7 @@ public class LoyaltyProgrammController {
 
     @PostMapping("/{client_id}")
     public ResponseEntity<Client> createLP(@RequestBody LoyaltyProgramm loyaltyProgramm,
-                                                    @PathVariable Long client_id) {
+                                           @PathVariable Long client_id) {
 
         if (loyaltyProgramm.getBonusCard() == null) {
             String bonusCard = loyaltyProgrammService.generateBonusCardNumber();

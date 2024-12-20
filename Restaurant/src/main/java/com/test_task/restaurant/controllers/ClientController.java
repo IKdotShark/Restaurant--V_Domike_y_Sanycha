@@ -41,24 +41,6 @@ public class ClientController {
 
     @PostMapping()
     public ResponseEntity<Client> createClient(@RequestBody Client client) {
-        if (client.getName() != null) {
-            client.setName(client.getName());
-        }
-        if (client.getContact() != null) {
-            client.setContact(client.getContact());
-        }
-        if (client.getEmail() != null) {
-            client.setEmail(client.getEmail());
-        }
-        if (client.getBirthday() != null) {
-            client.setBirthday(client.getBirthday());
-        }
-        if (client.getAdress() != null) {
-            client.setAdress(client.getAdress());
-        }
-        if (client.getBonusCard() != null) {
-            client.setBonusCard(client.getBonusCard());
-        }
         Client savedClient = clientService.saveClient(client);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedClient);
     }
@@ -66,25 +48,7 @@ public class ClientController {
     @PutMapping("/update/{id}")
     public ResponseEntity<Client> updateClient(@RequestBody Client clientInfo, @PathVariable Long id) {
         Client client = clientService.findClientById(id);
-        if (clientInfo.getName() != null) {
-            client.setName(clientInfo.getName());
-        }
-        if (clientInfo.getBirthday() != null) {
-            client.setBirthday(clientInfo.getBirthday());
-        }
-        if (clientInfo.getContact() != null) {
-            client.setContact(clientInfo.getContact());
-        }
-        if (clientInfo.getEmail() != null) {
-            client.setEmail(clientInfo.getEmail());
-        }
-        if (clientInfo.getBonusCard() != null) {
-            client.setBonusCard(clientInfo.getBonusCard());
-        }
-        if (clientInfo.getAdress() != null) {
-            client.setAdress(clientInfo.getAdress());
-        }
-        clientService.saveClient(client);
+        clientService.updateClient(client, clientInfo);
         return ResponseEntity.ok(client);
     }
 

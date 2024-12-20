@@ -1,8 +1,5 @@
 package com.test_task.restaurant.controllers;
 
-import com.test_task.restaurant.models.Dish;
-import com.test_task.restaurant.models.Drink;
-import com.test_task.restaurant.models.Desert;
 import com.test_task.restaurant.models.Menu;
 import com.test_task.restaurant.services.MenuService;
 import com.test_task.restaurant.services.DishService;
@@ -13,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/menu")
@@ -34,6 +30,7 @@ public class MenuController {
     @GetMapping("/{id}")
     public ResponseEntity<Menu> findMenuById(@PathVariable Long id) {
         Menu menu = menuService.findMenuById(id);
+        menuService.convertStringIngrToArray(menu);
         return ResponseEntity.ok(menu);
     }
 
@@ -50,21 +47,7 @@ public class MenuController {
 
     @PostMapping
     public ResponseEntity<Menu> createMenu(@RequestBody Menu menuRequest) {
-        List<Long> dishesIds = menuRequest.getDishesIds();
-        List<Long> drinksIds = menuRequest.getDrinksIds();
-        List<Long> desertsIds = menuRequest.getDesertsIds();
-
-        Menu menu = new Menu();
-
-        menu.setDishesIds(dishesIds);
-        menu.setDrinksIds(drinksIds);
-        menu.setDesertsIds(desertsIds);
-
-        menu.setDishes(dishService.findDishesByIds(dishesIds));
-        menu.setDrinks(drinkService.findDrinksByIds(drinksIds));
-        menu.setDeserts(desertService.findDesertsByIds(desertsIds));
-
-        Menu createdMenu = menuService.createMenu(menu);
+        Menu createdMenu = menuService.createMenu(menuRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdMenu);
     }
 
@@ -81,7 +64,7 @@ public class MenuController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteMenu(@PathVariable Long id) {
+    public ResponseEntity<Menu> deleteMenu(@PathVariable Long id) {
         menuService.deleteMenuById(id);
         return ResponseEntity.noContent().build();
     }

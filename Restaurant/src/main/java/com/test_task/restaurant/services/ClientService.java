@@ -4,6 +4,7 @@ import com.test_task.restaurant.exception.ResourceNotFoundException;
 import com.test_task.restaurant.models.Client;
 import com.test_task.restaurant.repositories.ClientRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
 import java.util.Optional;
@@ -46,6 +47,28 @@ public class ClientService {
                 .orElseThrow(() -> new ResourceNotFoundException("Client not found with id: " + clientId));
 
         client.setBonusCard(null);
+        return clientRepository.save(client);
+    }
+
+    public Client updateClient(Client client, Client clientInfo) {
+        if (clientInfo.getName() != null) {
+            client.setName(clientInfo.getName());
+        }
+        if (clientInfo.getBirthday() != null) {
+            client.setBirthday(clientInfo.getBirthday());
+        }
+        if (clientInfo.getContact() != null) {
+            client.setContact(clientInfo.getContact());
+        }
+        if (clientInfo.getEmail() != null) {
+            client.setEmail(clientInfo.getEmail());
+        }
+        if (clientInfo.getBonusCard() != null) {
+            client.setBonusCard(clientInfo.getBonusCard());
+        }
+        if (clientInfo.getAdress() != null) {
+            client.setAdress(clientInfo.getAdress());
+        }
         return clientRepository.save(client);
     }
 }

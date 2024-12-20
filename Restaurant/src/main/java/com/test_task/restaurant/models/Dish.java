@@ -1,6 +1,10 @@
 package com.test_task.restaurant.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 public class Dish {
@@ -16,17 +20,28 @@ public class Dish {
     private double price;
 
     @Column(nullable = false)
+    @JsonIgnore
     private String ingredients;
 
     @Column(nullable = false)
     private String description;
 
+    @Transient
+    @JsonProperty("ingredients") // Отображаем это поле в JSON
+    private List<String> transientIngredients;
+
     @Column(name = "category")
     private String category;
 
+    @Column(name = "menu_id", nullable = false)
+    private Long menuId;
+
     @ManyToOne
-    @JoinColumn(name = "menu_id")
+    @JoinColumn(name = "menu_id", insertable = false, updatable = false)
+    @JsonIgnore
     private Menu menu;
+
+    public Dish() {}
 
     public Long getId() {
         return id;
@@ -68,12 +83,12 @@ public class Dish {
         this.description = description;
     }
 
-    public Menu getMenu() {
-        return menu;
+    public Long getMenuId() {
+        return menuId;
     }
 
-    public void setMenu(Menu menu) {
-        this.menu = menu;
+    public void setMenuId(Long menuId) {
+        this.menuId = menuId;
     }
 
     public String getCategory() {
@@ -82,5 +97,13 @@ public class Dish {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public List<String> getTransientIngredients() {
+        return transientIngredients;
+    }
+
+    public void setTransientIngredients(List<String> transientIngredients) {
+        this.transientIngredients = transientIngredients;
     }
 }

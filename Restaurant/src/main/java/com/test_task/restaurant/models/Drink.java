@@ -24,9 +24,12 @@ public class Drink {
     @Column(name = "category")
     private String category;
 
+    @Column(name = "menu_id", nullable = false)
+    private Long menuId;
+
     @ManyToOne
-    @JoinColumn(name = "menu_id")
-    private Menu menu;
+    @JoinColumn(name = "menu_id", insertable = false, updatable = false)
+    private Menu menu; // Поле, связывающее Desert с Menu
 
     public Long getId() {
         return id;
@@ -68,12 +71,12 @@ public class Drink {
         this.description = description;
     }
 
-    public Menu getMenu() {
-        return menu;
+    public Long getMenuId() {
+        return menuId;
     }
 
-    public void setMenu(Menu menu) {
-        this.menu = menu;
+    public void setMenuId(Long menuId) {
+        this.menuId = menuId;
     }
 
     public String getCategory() {
