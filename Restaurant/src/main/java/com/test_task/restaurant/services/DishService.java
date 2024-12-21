@@ -19,6 +19,8 @@ public class DishService {
     }
 
     public Dish createDish(Dish dish) {
+        String ingredients = dish.getTransientIngredients().toString();
+        dish.setIngredients(ingredients);
         return dishRepository.save(dish);
     }
 

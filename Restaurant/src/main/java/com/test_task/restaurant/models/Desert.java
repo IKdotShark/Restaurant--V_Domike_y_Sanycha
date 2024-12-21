@@ -24,7 +24,7 @@ public class Desert {
     private String ingredients;
 
     @Transient
-    @JsonProperty("ingredients") // Отображаем это поле в JSON
+    @JsonProperty("ingredients")
     private List<String> transientIngredients;
 
     @Column(nullable = false)
@@ -32,7 +32,7 @@ public class Desert {
     @Column(name = "category")
     private String category;
 
-    @Column(name = "menu_id", nullable = false)
+    @Column(name = "menu_id")
     private Long menuId;
 
     @ManyToOne

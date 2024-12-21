@@ -27,13 +27,13 @@ public class Dish {
     private String description;
 
     @Transient
-    @JsonProperty("ingredients") // Отображаем это поле в JSON
+    @JsonProperty("ingredients")
     private List<String> transientIngredients;
 
     @Column(name = "category")
     private String category;
 
-    @Column(name = "menu_id", nullable = false)
+    @Column(name = "menu_id")
     private Long menuId;
 
     @ManyToOne

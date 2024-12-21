@@ -24,12 +24,12 @@ public class Drink {
     @Column(name = "category")
     private String category;
 
-    @Column(name = "menu_id", nullable = false)
+    @Column(name = "menu_id")
     private Long menuId;
 
     @ManyToOne
     @JoinColumn(name = "menu_id", insertable = false, updatable = false)
-    private Menu menu; // Поле, связывающее Desert с Menu
+    private Menu menu;
 
     public Long getId() {
         return id;

@@ -5,10 +5,7 @@ import com.test_task.restaurant.models.Desert;
 import com.test_task.restaurant.repositories.DesertRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class DesertService {
@@ -20,6 +17,8 @@ public class DesertService {
     }
 
     public Desert createDesert(Desert desert) {
+        String ingredients = desert.getTransientIngredients().toString();
+        desert.setIngredients(ingredients);
         return desertRepository.save(desert);
     }
 
