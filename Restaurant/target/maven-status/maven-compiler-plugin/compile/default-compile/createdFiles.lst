@@ -10,6 +10,7 @@ com/test_task/restaurant/models/Menu.class
 com/test_task/restaurant/models/Drink.class
 com/test_task/restaurant/controllers/OrdersController.class
 com/test_task/restaurant/controllers/MenuController.class
+com/test_task/restaurant/config/WebConfig.class
 com/test_task/restaurant/models/Orders$Status.class
 com/test_task/restaurant/services/MenuService.class
 com/test_task/restaurant/exception/ResourceNotFoundException.class
@@ -42,6 +43,7 @@ com/test_task/restaurant/models/Offer.class
 com/test_task/restaurant/models/Reservation$Hall.class
 com/test_task/restaurant/repositories/MenuRepository.class
 com/test_task/restaurant/services/DesertService.class
+com/test_task/restaurant/models/Menu$InstanceHolder.class
 com/test_task/restaurant/controllers/ReservationController.class
 com/test_task/restaurant/models/Employee$StaffRole.class
 com/test_task/restaurant/models/Staff.class

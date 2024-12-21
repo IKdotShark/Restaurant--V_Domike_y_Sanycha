@@ -33,6 +33,7 @@
 /home/ik-shark/Restaurant-V_Domike_y_Sanycha/Restaurant/src/main/java/com/test_task/restaurant/repositories/MenuRepository.java
 /home/ik-shark/Restaurant-V_Domike_y_Sanycha/Restaurant/src/main/java/com/test_task/restaurant/controllers/ClientController.java
 /home/ik-shark/Restaurant-V_Domike_y_Sanycha/Restaurant/src/main/java/com/test_task/restaurant/models/Inventory.java
+/home/ik-shark/Restaurant-V_Domike_y_Sanycha/Restaurant/src/main/java/com/test_task/restaurant/config/WebConfig.java
 /home/ik-shark/Restaurant-V_Domike_y_Sanycha/Restaurant/src/main/java/com/test_task/restaurant/services/SupplierService.java
 /home/ik-shark/Restaurant-V_Domike_y_Sanycha/Restaurant/src/main/java/com/test_task/restaurant/controllers/ReservationController.java
 /home/ik-shark/Restaurant-V_Domike_y_Sanycha/Restaurant/src/main/java/com/test_task/restaurant/controllers/DesertController.java
