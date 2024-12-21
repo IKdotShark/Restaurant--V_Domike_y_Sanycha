@@ -17,8 +17,10 @@ public class DesertService {
     }
 
     public Desert createDesert(Desert desert) {
-        String ingredients = desert.getTransientIngredients().toString();
-        desert.setIngredients(ingredients);
+        if (desert.getTransientIngredients() != null) {
+            String ingredients = String.join(",", desert.getTransientIngredients());
+            desert.setIngredients(ingredients);
+        }
         return desertRepository.save(desert);
     }
 
@@ -30,8 +32,13 @@ public class DesertService {
     public List<Desert> findDesertsByIds(List<Long> ids) {
         List<Desert> deserts = new ArrayList<>();
         for (Long id : ids) {
-            Optional<Desert> desert = desertRepository.findById(id);
-            desert.ifPresent(deserts::add);
+            desertRepository.findById(id).ifPresent(desert -> {
+                if (desert.getIngredients() != null) {
+                    List<String> ingredientsList = Arrays.asList(desert.getIngredients().split(","));
+                    desert.setTransientIngredients(ingredientsList);
+                }
+                deserts.add(desert);
+            });
         }
         return deserts;
     }

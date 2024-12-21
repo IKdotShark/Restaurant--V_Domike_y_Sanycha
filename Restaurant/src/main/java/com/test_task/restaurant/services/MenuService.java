@@ -78,9 +78,9 @@ public class MenuService {
         List<Drink> drinks = menu.getDrinks();
         List<Desert> deserts = menu.getDeserts();
 
-        dishes.forEach(dish -> dish.setMenuId(menu.getId()));
-        drinks.forEach(drink -> drink.setMenuId(menu.getId()));
-        deserts.forEach(desert -> desert.setMenuId(menu.getId()));
+        dishes.forEach(dish -> dish.setMenuId(menu.getId() != null ? menu.getId() : 1L));
+        drinks.forEach(drink -> drink.setMenuId(menu.getId() != null ? menu.getId() : 1L));
+        deserts.forEach(desert -> desert.setMenuId(menu.getId() != null ? menu.getId() : 1L));
     }
 
     public Menu createMenu(Menu menuRequest) {
@@ -115,6 +115,7 @@ public class MenuService {
         menu.getDishes().forEach(dish -> {
             if (dish.getIngredients() != null && !dish.getIngredients().isEmpty()) {
                 List<String> ingredientsList = Arrays.asList(dish.getIngredients().split(","));
+                dish.setMenuId(menu.getId());
                 dish.setTransientIngredients(ingredientsList);
             }
         });
@@ -122,6 +123,7 @@ public class MenuService {
         menu.getDeserts().forEach(desert -> {
             if (desert.getIngredients() != null && !desert.getIngredients().isEmpty()) {
                 List<String> ingredientsList = Arrays.asList(desert.getIngredients().split(","));
+                desert.setMenuId(menu.getId());
                 desert.setTransientIngredients(ingredientsList);
             }
         });

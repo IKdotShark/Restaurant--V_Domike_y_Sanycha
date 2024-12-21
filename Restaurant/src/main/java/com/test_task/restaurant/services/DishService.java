@@ -6,6 +6,7 @@ import com.test_task.restaurant.repositories.DishRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,8 +20,10 @@ public class DishService {
     }
 
     public Dish createDish(Dish dish) {
-        String ingredients = dish.getTransientIngredients().toString();
-        dish.setIngredients(ingredients);
+        if (dish.getTransientIngredients() != null) {
+            String ingredients = String.join(",", dish.getTransientIngredients());
+            dish.setIngredients(ingredients);
+        }
         return dishRepository.save(dish);
     }
 
@@ -32,8 +35,13 @@ public class DishService {
     public List<Dish> findDishesByIds(List<Long> ids) {
         List<Dish> dishes = new ArrayList<>();
         for (Long id : ids) {
-            Optional<Dish> dish = dishRepository.findById(id);
-            dish.ifPresent(dishes::add);
+            dishRepository.findById(id).ifPresent(dish -> {
+                if (dish.getIngredients() != null) {
+                    List<String> ingredientsList = Arrays.asList(dish.getIngredients().split(","));
+                    dish.setTransientIngredients(ingredientsList);
+                }
+                dishes.add(dish);
+            });
         }
         return dishes;
     }
