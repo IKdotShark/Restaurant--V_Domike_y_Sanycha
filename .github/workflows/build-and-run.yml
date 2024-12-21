@@ -63,8 +63,12 @@ jobs:
         run: |
           cd /home/runner/work/Restaurant-V_Domike_y_Sanycha/Restaurant-V_Domike_y_Sanycha/Restaurant
           mvn clean install
-
-      - name: Run Spring Boot application
+      # Don't need to run an application
+      #- name: Run Spring Boot application
+      #  run: |
+      #    cd /home/runner/work/Restaurant-V_Domike_y_Sanycha/Restaurant-V_Domike_y_Sanycha/Restaurant
+      #    mvn spring-boot:run
+      - name: Run tests
         run: |
           cd /home/runner/work/Restaurant-V_Domike_y_Sanycha/Restaurant-V_Domike_y_Sanycha/Restaurant
-          mvn spring-boot:run
+          mvn test
