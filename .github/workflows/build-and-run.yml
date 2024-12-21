@@ -24,10 +24,10 @@ jobs:
 
       - name: Install Maven dependencies and build
         run: |
-          cd Restaurant-V_Domike_y_Sanycha/Restaurant
+          cd /Restaurant
           mvn clean install
 
       - name: Run Spring Boot application
         run: |
-          cd Restaurant-V_Domike_y_Sanycha/Restaurant
+          cd /Restaurant
           mvn spring-boot:run
