@@ -43,6 +43,7 @@ public class DesertController {
         desert.setName(desertInfo.getName());
         desert.setIngredients(desertInfo.getIngredients());
         desert.setPrice(desertInfo.getPrice());
+        desert.setSrc(desertInfo.getSrc());
         desertService.createDesert(desert);
         return ResponseEntity.ok(desert);
     }

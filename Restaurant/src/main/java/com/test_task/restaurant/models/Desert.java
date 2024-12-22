@@ -18,7 +18,6 @@ public class Desert {
     @Column(nullable = false)
     private double price;
 
-
     @Column(nullable = false)
     @JsonIgnore
     private String ingredients;
@@ -39,6 +38,9 @@ public class Desert {
     @JoinColumn(name = "menu_id", insertable = false, updatable = false)
     @JsonIgnore
     private Menu menu;
+
+    @Column(name = "image")
+    private String src;
 
     public Desert() {}
 
@@ -104,5 +106,13 @@ public class Desert {
 
     public void setTransientIngredients(List<String> transientIngredients) {
         this.transientIngredients = transientIngredients;
+    }
+
+    public String getSrc() {
+        return src;
+    }
+
+    public void setSrc(String src) {
+        this.src = src;
     }
 }

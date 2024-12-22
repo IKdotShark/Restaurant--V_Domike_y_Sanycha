@@ -43,6 +43,7 @@ public class DishController {
         dish.setIngredients(dishInfo.getIngredients());
         dish.setPrice(dishInfo.getPrice());
         dish.setDescription(dishInfo.getDescription());
+        dish.setSrc(dishInfo.getSrc());
         dishService.createDish(dish);
         return ResponseEntity.ok(dish);
     }

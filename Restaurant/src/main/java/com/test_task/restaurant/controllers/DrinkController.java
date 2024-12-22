@@ -42,13 +42,14 @@ public class DrinkController {
         drink.setName(drinkInfo.getName());
         drink.setPrice(drinkInfo.getPrice());
         drink.setDescription(drinkInfo.getDescription());
+        drink.setSrc(drinkInfo.getSrc());
         drinkService.createDrink(drink);
         return ResponseEntity.ok(drink);
     }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteDrink(@PathVariable Long id) {
-        drinkService.deleteDrinkByid(id);
+        drinkService.deleteDrinkById(id);
         return ResponseEntity.noContent().build();
     }
 }

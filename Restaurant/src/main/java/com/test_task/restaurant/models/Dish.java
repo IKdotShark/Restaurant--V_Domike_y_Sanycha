@@ -41,6 +41,9 @@ public class Dish {
     @JsonIgnore
     private Menu menu;
 
+    @Column(name = "image")
+    private String src;
+
     public Dish() {}
 
     public Long getId() {
@@ -105,5 +108,13 @@ public class Dish {
 
     public void setTransientIngredients(List<String> transientIngredients) {
         this.transientIngredients = transientIngredients;
+    }
+
+    public String getSrc() {
+        return src;
+    }
+
+    public void setSrc(String src) {
+        this.src = src;
     }
 }

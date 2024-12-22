@@ -68,15 +68,4 @@ public class LoyaltyProgrammController {
         LoyaltyProgramm updatedProgram = loyaltyProgrammService.deductBalance(id, amount);
         return ResponseEntity.ok(updatedProgram);
     }
-
-    @PutMapping("/update/{id}")
-    public ResponseEntity<LoyaltyProgramm> updateLP(
-            @RequestBody LoyaltyProgramm loyaltyProgrammInfo,
-            @PathVariable Long id) {
-        LoyaltyProgramm loyaltyProgramm = loyaltyProgrammService.findLoyaltyProgramById(id);
-        loyaltyProgramm.setBalance(loyaltyProgrammInfo.getBalance());
-        loyaltyProgramm.setBonusCard(loyaltyProgrammInfo.getBonusCard());
-        loyaltyProgrammService.createLoyaltyProgram(loyaltyProgramm);
-        return ResponseEntity.ok(loyaltyProgramm);
-    }
 }

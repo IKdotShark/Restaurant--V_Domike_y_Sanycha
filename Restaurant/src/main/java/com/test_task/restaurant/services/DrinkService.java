@@ -41,7 +41,7 @@ public class DrinkService {
         return drinkRepository.findAll();
     }
 
-    public void deleteDrinkByid(Long id) {
+    public void deleteDrinkById(Long id) {
         Optional<Drink> drink = drinkRepository.findById(id);
         if (drink.isEmpty()) throw new ResourceNotFoundException("Not found drink with such " + id);
         drinkRepository.deleteById(id);
