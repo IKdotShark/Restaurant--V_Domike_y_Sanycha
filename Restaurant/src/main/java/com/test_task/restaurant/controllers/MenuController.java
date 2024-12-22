@@ -1,5 +1,8 @@
 package com.test_task.restaurant.controllers;
 
+import com.test_task.restaurant.models.Desert;
+import com.test_task.restaurant.models.Dish;
+import com.test_task.restaurant.models.Drink;
 import com.test_task.restaurant.models.Menu;
 import com.test_task.restaurant.services.MenuService;
 import com.test_task.restaurant.services.DishService;
@@ -55,13 +58,25 @@ public class MenuController {
     public ResponseEntity<Menu> updateMenu(@RequestBody Menu menuInfo, @PathVariable Long id) {
         Menu menu = menuService.findMenuById(id);
 
-        menu.setDishesIds(menuInfo.getDishesIds());
-        menu.setDrinksIds(menuInfo.getDrinksIds());
-        menu.setDesertsIds(menuInfo.getDesertsIds());
+        if (menuInfo.getDishesIds() != null) {
+            menu.getDishesIds().clear();
+            menu.getDishesIds().addAll(menuInfo.getDishesIds());
+        }
+
+        if (menuInfo.getDrinksIds() != null) {
+            menu.getDrinksIds().clear();
+            menu.getDrinksIds().addAll(menuInfo.getDrinksIds());
+        }
+
+        if (menuInfo.getDesertsIds() != null) {
+            menu.getDesertsIds().clear();
+            menu.getDesertsIds().addAll(menuInfo.getDesertsIds());
+        }
 
         menuService.createMenu(menu);
         return ResponseEntity.ok(menu);
     }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Menu> deleteMenu(@PathVariable Long id) {
