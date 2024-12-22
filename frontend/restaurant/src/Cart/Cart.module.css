@@ -166,9 +166,23 @@
   .orderTitle {
     display: flex;
     justify-content: center;
-    padding-bottom: 30px;
+  }
+
+  .orderItems {
+    font-family: "Arial", sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .orderItems h2 {
+    margin-bottom: 0;
   }
   
+  .orderTotal {
+    margin-bottom: 15px;
+  }
+
   .orderForm {
     display: flex;
     flex-direction: column;

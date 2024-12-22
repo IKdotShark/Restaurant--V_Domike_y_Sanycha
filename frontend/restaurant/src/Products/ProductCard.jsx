@@ -19,14 +19,26 @@ function ProductCard({ product }) {
     addToCart(product); // Добавляем товар в корзину
   };
 
-  const ingredientsArray = product.ingredients.map((ingredient) => (
-    <li key={ingredient}>{ingredient}</li>
-  ));
+  // Логика для отображения ингредиентов или объема
+  const renderIngredientsOrVolume = (product) => {
+    if (product.volume) {
+      return <p className={styles.modalVolume}><strong>Объем:</strong> {product.volume}</p>;
+    } else if (product.ingredients) {
+      return (
+        <ul className={styles.modalIngredients}>
+          {product.ingredients.map((item, index) => (
+            <li key={index}>{item}</li>
+          ))}
+        </ul>
+      );
+    }
+    return null;
+  };
 
   return (
     <>
       <div className={styles.card} onClick={handleCardClick}>
-        <img src={product.image} alt={product.name} className={styles.image} />
+        <img src={product.src} alt={product.name} className={styles.image} />
         <h3 className={styles.name}>{product.name}</h3>
         <p className={styles.price}>{product.price} ₽</p>
         <button className={styles.button} onClick={handleBasketClick}>
@@ -38,7 +50,7 @@ function ProductCard({ product }) {
         <div className={styles.modalOverlay} onClick={handleCloseModal}>
           <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
             <img
-              src={product.image}
+              src={product.src}
               alt={product.name}
               className={styles.modalImage}
             />
@@ -48,11 +60,7 @@ function ProductCard({ product }) {
                 <p className={styles.modalDescription}>
                   {product.description || "Описание отсутствует"}
                 </p>
-                <ul className={styles.modalIngredients}>
-                  {product.ingredients?.map((item, index) => (
-                    <li key={index}>{item}</li>
-                  ))}
-                </ul>
+                {renderIngredientsOrVolume(product)} {/* Выводим ингредиенты или объем */}
               </div>
               <p className={styles.price}>{product.price} ₽</p>
               <div className={styles.modalFooter}>

@@ -2,10 +2,9 @@ import React, { useRef } from "react";
 import Header from "./Header/Header";
 import Footer from "./Footer/Footer";
 import Logo from "./Logo/Logo";
-import ProductModule from "./Products/ProductModule";
-import { Titles, specialOffers, dishes, desserts, drinks } from "./Products/productData";
-import Cart from "./Cart/Cart";
+import ProductSection from "./Products/ProductSection"; // Импортируем новый компонент
 import { CartProvider } from "./Cart/CartContext";
+import Cart from "./Cart/Cart";
 
 function App() {
   const specialOffersRef = useRef(null);
@@ -35,35 +34,15 @@ function App() {
         }}
       />
       <Logo />
-      <div ref={specialOffersRef}>
-        <ProductModule
-          title={Titles.specialOffers}
-          products={specialOffers}
-          titleColor="red"
+      <div className="mainContent">
+        <ProductSection
+          specialOffersRef={specialOffersRef}
+          dishesRef={dishesRef}
+          dessertsRef={dessertsRef}
+          drinksRef={drinksRef}
         />
+        <Cart />
       </div>
-      <div ref={dishesRef}>
-        <ProductModule
-          title={Titles.dishes}
-          products={dishes}
-          titleColor="black"
-        />
-      </div>
-      <div ref={dessertsRef}>
-        <ProductModule
-          title={Titles.desserts}
-          products={desserts}
-          titleColor="black"
-        />
-      </div>
-      <div ref={drinksRef}>
-        <ProductModule
-          title={Titles.drinks}
-          products={drinks}
-          titleColor="black"
-        />
-      </div>
-      <Cart />
       <Footer />
     </CartProvider>
   );

@@ -9,8 +9,11 @@ export const CartProvider = ({ children }) => {
 
   const addToCart = (item) => {
     setCartItems((prevItems) => {
-      const index = prevItems.findIndex((cartItem) => cartItem.id === item.id);
-
+      // Ищем товар по id и category
+      const index = prevItems.findIndex(
+        (cartItem) => cartItem.id === item.id && cartItem.category === item.category
+      );
+  
       if (index !== -1) {
         const updatedItems = [...prevItems];
         updatedItems[index] = {
@@ -19,32 +22,37 @@ export const CartProvider = ({ children }) => {
         };
         return updatedItems;
       }
-
+  
       return [...prevItems, { ...item, quantity: 1 }];
     });
   };
-
-  const removeFromCart = (id) => {
-    setCartItems((prevItems) => prevItems.filter((item) => item.id !== id));
+  
+  const removeFromCart = (id, category) => {
+    setCartItems((prevItems) =>
+      prevItems.filter((item) => item.id !== id || item.category !== category)
+    );
   };
-
-  const increaseQuantity = (id) => {
+  
+  const increaseQuantity = (id, category) => {
     setCartItems((prevItems) =>
       prevItems.map((item) =>
-        item.id === id ? { ...item, quantity: item.quantity + 1 } : item
+        item.id === id && item.category === category
+          ? { ...item, quantity: item.quantity + 1 }
+          : item
       )
     );
   };
-
-  const decreaseQuantity = (id) => {
+  
+  const decreaseQuantity = (id, category) => {
     setCartItems((prevItems) =>
       prevItems.map((item) =>
-        item.id === id && item.quantity > 1
+        item.id === id && item.category === category && item.quantity > 1
           ? { ...item, quantity: item.quantity - 1 }
           : item
       )
     );
   };
+  
 
   const clearCart = () => {
     setCartItems([]);
