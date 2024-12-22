@@ -39,13 +39,8 @@ public class DesertController {
     @PutMapping("/update/{id}")
     public ResponseEntity<Desert> updateDesert(@RequestBody Desert desertInfo, @PathVariable Long id) {
         Desert desert = desertService.findDesertById(id);
-        desert.setDescription(desertInfo.getDescription());
-        desert.setName(desertInfo.getName());
-        desert.setIngredients(desertInfo.getIngredients());
-        desert.setPrice(desertInfo.getPrice());
-        desert.setSrc(desertInfo.getSrc());
-        desertService.createDesert(desert);
-        return ResponseEntity.ok(desert);
+        Desert updatedDesert = desertService.updateDesert(desert, desertInfo);
+        return ResponseEntity.ok(updatedDesert);
     }
 
     @DeleteMapping("/delete/{id}")
