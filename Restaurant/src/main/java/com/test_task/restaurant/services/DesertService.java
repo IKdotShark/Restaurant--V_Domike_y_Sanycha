@@ -65,6 +65,7 @@ public class DesertService {
         if (desertInfo.getTransientIngredients() != null) {
             String ingredients = String.join(",", desertInfo.getTransientIngredients());
             desert.setIngredients(ingredients);
+            desert.setTransientIngredients(desertInfo.getTransientIngredients());
         } else {
             List<String> ingredientsList = Arrays.asList(desert.getIngredients().split(","));
             desert.setTransientIngredients(ingredientsList);
