@@ -39,15 +39,16 @@ function Cart() {
     firstName: "",
     lastName: "",
     phone: "",
+    email: "",
     address: "",
   });
 
-  const [errorMessage, setErrorMessage] = useState(""); // Состояние для сообщений об ошибке
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
-    if (errorMessage) setErrorMessage(""); // Очищаем сообщение об ошибке при изменении данных
+    if (errorMessage) setErrorMessage("");
   };
 
   const handleDeliveryTypeChange = (e) => {
@@ -66,14 +67,49 @@ function Cart() {
     );
   };
 
+  const sendOrderRequest = async () => {
+    const expandItems = (category) =>
+      cartItems
+        .filter((item) => item.category === category)
+        .flatMap((item) => Array(item.quantity).fill(item.id));
+  
+    const requestData = {
+      client: {
+        contact: formData.phone,
+      },
+      status: "ACCEPTED",
+      dishesIds: expandItems("Dish"),
+      drinksIds: expandItems("Drink"),
+      desertsIds: expandItems("Desert"),
+    };
+
+    try {
+      const response = await fetch("http://localhost:8080/api/orders", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestData),
+      });
+
+      if (!response.ok) {
+        throw new Error("Ошибка при оформлении заказа.");
+      }
+
+      alert("Заказ успешно оформлен!");
+      clearCart();
+      setOrderModalOpen(false);
+      setErrorMessage("");
+    } catch (error) {
+      setErrorMessage("Не удалось оформить заказ. Попробуйте ещё раз.");
+    }
+  };
+
   const handlePayment = () => {
     if (!isFormValid()) {
-      setErrorMessage("Пожалуйста, заполните все обязательные поля."); // Выводим сообщение об ошибке
+      setErrorMessage("Пожалуйста, заполните все обязательные поля.");
     } else {
-      alert("Заказ успешно оформлен!");
-      setOrderModalOpen(false);
-      clearCart();
-      setErrorMessage(""); // Очищаем сообщение после успешного заказа
+      sendOrderRequest();
     }
   };
 
@@ -176,7 +212,7 @@ function Cart() {
             <form className={styles.orderForm}>
               <div className={styles.orderFormText}>
                 <label>
-                  Имя:
+                  Имя*:
                   <input
                     type="text"
                     name="firstName"
@@ -185,7 +221,7 @@ function Cart() {
                   />
                 </label>
                 <label>
-                  Фамилия:
+                  Фамилия*:
                   <input
                     type="text"
                     name="lastName"
@@ -194,12 +230,22 @@ function Cart() {
                   />
                 </label>
                 <label>
-                  Телефон:
+                  Телефон*:
                   <input
                     type="tel"
                     placeholder="+7 999 999 99 99"
                     name="phone"
                     value={formData.phone}
+                    onChange={handleChange}
+                  />
+                </label>
+                <label>
+                  Email:
+                  <input
+                    type="text"
+                    placeholder="email@mail.com"
+                    name="email"
+                    value={formData.email}
                     onChange={handleChange}
                   />
                 </label>

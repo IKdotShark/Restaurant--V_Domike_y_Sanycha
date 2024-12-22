@@ -46,9 +46,6 @@ function Header({ scrollToSection, refs }) {
             onClick={(e) => e.stopPropagation()}
           >
             <ul className={styles.menuList}>
-              <li onClick={() => { toggleMenu(); scrollToSection(refs.specialOffersRef); }}>
-                {Titles.specialOffers}
-              </li>
               <li onClick={() => { toggleMenu(); scrollToSection(refs.dishesRef); }}>
                 {Titles.dishes}
               </li>
