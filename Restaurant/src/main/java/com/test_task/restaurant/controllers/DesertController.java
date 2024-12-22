@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -21,6 +22,10 @@ public class DesertController {
     @GetMapping("/{id}")
     public ResponseEntity<Desert> findDesertById(@PathVariable Long id) {
         Desert desert = desertService.findDesertById(id);
+        if (desert.getIngredients() != null) {
+            List<String> ingredientsList = Arrays.asList(desert.getIngredients().split(","));
+            desert.setTransientIngredients(ingredientsList);
+        }
         return ResponseEntity.ok(desert);
     }
 
