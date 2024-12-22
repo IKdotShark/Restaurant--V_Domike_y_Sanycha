@@ -69,6 +69,7 @@ public class DishService {
         if (dishInfo.getTransientIngredients() != null) {
             String ingredients = String.join(",", dishInfo.getTransientIngredients());
             dish.setIngredients(ingredients);
+            dish.setTransientIngredients(dishInfo.getTransientIngredients());
         } else {
             List<String> ingredientsList = Arrays.asList(dish.getIngredients().split(","));
             dish.setTransientIngredients(ingredientsList);
