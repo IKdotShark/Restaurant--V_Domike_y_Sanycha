@@ -93,7 +93,7 @@ function Cart() {
                 cartItems.map((item) => (
                   <li key={item.id} className={styles.cartItem}>
                     <div className={styles.productImage}>
-                      <img src={item.image} alt={item.name} />
+                      <img src={item.src} alt={item.name} />
                     </div>
                     <div className={styles.itemPrice}>
                       <div className={styles.cartDetails}>
@@ -150,69 +150,83 @@ function Cart() {
         </div>
       )}
 
-      {/* Модальное окно заказа */}
+     {/* Модальное окно заказа */}
       {isOrderModalOpen && (
         <div className={styles.orderModalOverlay}>
           <div className={styles.orderModal}>
             <div className={styles.orderTitle}>
-            <h1>Оформление заказа</h1>
+              <h1>Оформление заказа</h1>
+            </div>
+            <div className={styles.orderItems}>
+              <h2>Ваш заказ:</h2>
+              <ul className={styles.orderItemList}>
+                {cartItems.map((item) => (
+                  <li key={item.id} className={styles.orderItem}>
+                    <span>
+                      {item.name} x {item.quantity}
+                    </span>
+                    <span> - {item.price * item.quantity} ₽</span>
+                  </li>
+                ))}
+              </ul>
+              <div className={styles.orderTotal}>
+                <strong>Итого:</strong> {calculateTotal()} ₽
+              </div>
             </div>
             <form className={styles.orderForm}>
-            <div className={styles.orderFormText}>
-              <label>
-                Имя: 
-                <input
-                  type="text"
-                  name="firstName"
-                  value={formData.firstName}
-                  onChange={handleChange}
-                />
-              </label>
-              <label>
-                Фамилия: 
-                <input
-                  type="text"
-                  name="lastName"
-                  value={formData.lastName}
-                  onChange={handleChange}
-                />
-              </label>
-              <label>
-                Телефон: 
-                <input
-                  type="tel"
-                  placeholder="+7 999 999 99 99"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleChange}
-                />
-              </label>
-              <label>
-                Тип доставки: 
-                <select
-                  name="deliveryType"
-                  value={deliveryType}
-                  onChange={handleDeliveryTypeChange}
-                >
-                  <option value="carryout">С собой</option>
-                  <option value="delivery">На дом</option>
-                </select>
-              </label>
-              {deliveryType === "delivery" && (
+              <div className={styles.orderFormText}>
                 <label>
-                  Адрес:
+                  Имя:
                   <input
                     type="text"
-                    name="address"
-                    value={formData.address}
+                    name="firstName"
+                    value={formData.firstName}
                     onChange={handleChange}
                   />
                 </label>
-              )}
-
-              {errorMessage && <p className={styles.errorMessage}>{errorMessage}</p>}
+                <label>
+                  Фамилия:
+                  <input
+                    type="text"
+                    name="lastName"
+                    value={formData.lastName}
+                    onChange={handleChange}
+                  />
+                </label>
+                <label>
+                  Телефон:
+                  <input
+                    type="tel"
+                    placeholder="+7 999 999 99 99"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleChange}
+                  />
+                </label>
+                <label>
+                  Тип доставки:
+                  <select
+                    name="deliveryType"
+                    value={deliveryType}
+                    onChange={handleDeliveryTypeChange}
+                  >
+                    <option value="carryout">С собой</option>
+                    <option value="delivery">На дом</option>
+                  </select>
+                </label>
+                {deliveryType === "delivery" && (
+                  <label>
+                    Адрес:
+                    <input
+                      type="text"
+                      name="address"
+                      value={formData.address}
+                      onChange={handleChange}
+                    />
+                  </label>
+                )}
+                {errorMessage && <p className={styles.errorMessage}>{errorMessage}</p>}
               </div>
-
               <button
                 className={styles.paymentButton}
                 type="button"

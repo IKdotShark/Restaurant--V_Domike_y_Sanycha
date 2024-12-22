@@ -1,9 +1,15 @@
 export const Titles = {
-    specialOffers: 'Специальные предложения',
-    dishes: 'Блюда',
-    desserts: 'Десерты',
-    drinks: 'Напитки',
+  specialOffers: 'Специальные предложения',
+  dishes: 'Блюда',
+  desserts: 'Десерты',
+  drinks: 'Напитки',
 };
+
+export const IDs = {
+    dishesIds: [1],  // Пример ID блюд
+    drinksIds: [1, 2],  // Пример ID напитков
+    desertsIds: [1], // Пример ID десертов
+}
 
 export const specialOffers = [
   {
@@ -86,6 +92,7 @@ export const desserts = [
   }
 ];
 
+// Изменения в массиве drinks
 export const drinks = [
   {
     id: 12,
@@ -93,7 +100,7 @@ export const drinks = [
     price: 200,
     image: './src/assets/products/icecream.png',
     description: 'Освежающий коктейль с насыщенным вкусом клубники.',
-    ingredients: ['Молоко', 'Клубника', 'Сахар', 'Сливки']
+    volume: '300ml' // Заменяем ингредиенты на объем
   },
   {
     id: 13,
@@ -101,7 +108,7 @@ export const drinks = [
     price: 150,
     image: './src/assets/products/cake.png',
     description: 'Густой и насыщенный шоколадный коктейль.',
-    ingredients: ['Молоко', 'Какао', 'Сахар', 'Шоколадная стружка']
+    volume: '250ml' // Заменяем ингредиенты на объем
   },
   {
     id: 14,
@@ -109,8 +116,6 @@ export const drinks = [
     price: 150,
     image: './src/assets/products/vodkakvas.jpg',
     description: 'Спросите у батина',
-    ingredients: ['Водка', 'Квас']
+    volume: '500ml' // Заменяем ингредиенты на объем
   }
 ];
-
-  
