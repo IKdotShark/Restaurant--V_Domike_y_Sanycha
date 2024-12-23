@@ -59,9 +59,9 @@ function Cart() {
   };
 
   const isFormValid = () => {
+    const fullName = `${formData.firstName.trim()} ${formData.lastName.trim()}`;
     return (
-      formData.firstName.trim() &&
-      formData.lastName.trim() &&
+      fullName.trim() && // Проверка полного имени
       formData.phone.trim() &&
       (deliveryType === "carryout" || (deliveryType === "delivery" && formData.address.trim()))
     );
@@ -73,16 +73,20 @@ function Cart() {
         .filter((item) => item.category === category)
         .flatMap((item) => Array(item.quantity).fill(item.id));
   
+    const fullName = `${formData.firstName.trim()} ${formData.lastName.trim()}`;
+    const formattedPhone = formData.phone.replace(/\+/g, ""); // Убираем плюс из номера телефона
+  
     const requestData = {
       client: {
-        contact: formData.phone,
+        name: fullName,
+        contact: formattedPhone, // Используем обработанный номер телефона
       },
       status: "ACCEPTED",
       dishesIds: expandItems("Dish"),
       drinksIds: expandItems("Drink"),
       desertsIds: expandItems("Desert"),
     };
-
+  
     try {
       const response = await fetch("http://localhost:8080/api/orders", {
         method: "POST",
@@ -91,11 +95,11 @@ function Cart() {
         },
         body: JSON.stringify(requestData),
       });
-
+  
       if (!response.ok) {
         throw new Error("Ошибка при оформлении заказа.");
       }
-
+  
       alert("Заказ успешно оформлен!");
       clearCart();
       setOrderModalOpen(false);
@@ -104,7 +108,7 @@ function Cart() {
       setErrorMessage("Не удалось оформить заказ. Попробуйте ещё раз.");
     }
   };
-
+  
   const handlePayment = () => {
     if (!isFormValid()) {
       setErrorMessage("Пожалуйста, заполните все обязательные поля.");
