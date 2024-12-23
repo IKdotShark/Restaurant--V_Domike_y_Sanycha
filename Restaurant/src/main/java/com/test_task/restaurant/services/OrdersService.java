@@ -1,6 +1,7 @@
 package com.test_task.restaurant.services;
 
 import com.test_task.restaurant.Dto.OrderRequest;
+import com.test_task.restaurant.Dto.StatusRequest;
 import com.test_task.restaurant.exception.ResourceNotFoundException;
 import com.test_task.restaurant.models.*;
 import com.test_task.restaurant.repositories.*;
@@ -53,6 +54,26 @@ public class OrdersService {
         order.setTotalCost(totalCost);
 
         return ordersRepository.save(order);
+    }
+
+    public Orders updateOrderStatus(Orders order, StatusRequest request) {
+        switch (request.getStatus().toLowerCase()) {
+            case "accepted":
+                order.setStatus(Orders.Status.ACCEPTED);
+                break;
+            case "cooking":
+                order.setStatus(Orders.Status.COOKING);
+                break;
+            case "delivering":
+                order.setStatus(Orders.Status.DELIVERING);
+                break;
+            case "delivered":
+                order.setStatus(Orders.Status.DELIVERED);
+                break;
+            default:
+                throw new ResourceNotFoundException("Not found such status");
+        }
+        return order;
     }
 
     private double calculateTotalCost(List<Dish> dishes, List<Drink> drinks, List<Desert> deserts) {

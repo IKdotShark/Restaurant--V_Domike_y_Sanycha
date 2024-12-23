@@ -1,6 +1,7 @@
 package com.test_task.restaurant.controllers;
 
 import com.test_task.restaurant.Dto.OrderRequest;
+import com.test_task.restaurant.Dto.StatusRequest;
 import com.test_task.restaurant.models.Orders;
 import com.test_task.restaurant.models.Orders.Status;
 import com.test_task.restaurant.services.OrdersService;
@@ -39,10 +40,9 @@ public class OrdersController {
     }
 
     @PatchMapping("/{id}/status")
-    public ResponseEntity<Orders> updateOrderStatus(@PathVariable Long id, @RequestParam Status status) {
+    public ResponseEntity<Orders> updateOrderStatus(@PathVariable Long id, @RequestBody StatusRequest request) {
         Orders order = ordersService.findOrderById(id);
-        order.setStatus(status);
-        Orders updatedOrder = ordersService.createOrder(new OrderRequest(order));
+        Orders updatedOrder = ordersService.updateOrderStatus(order, request);
         return ResponseEntity.ok(updatedOrder);
     }
 
