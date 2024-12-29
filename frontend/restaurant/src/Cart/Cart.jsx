@@ -143,19 +143,19 @@ function Cart() {
                         <div className={styles.quantityControls}>
                           <button
                             className={styles.controlButton}
-                            onClick={() => decreaseQuantity(item.id)}
+                            onClick={() => decreaseQuantity(item.id, item.category)}
                           >
                             -
                           </button>
                           <button
                             className={styles.controlButton}
-                            onClick={() => increaseQuantity(item.id)}
+                            onClick={() => increaseQuantity(item.id, item.category)}
                           >
                             +
                           </button>
                           <button
                             className={styles.controlButton}
-                            onClick={() => removeFromCart(item.id)}
+                            onClick={() => removeFromCart(item.id, item.category)}
                           >
                             ✖
                           </button>
