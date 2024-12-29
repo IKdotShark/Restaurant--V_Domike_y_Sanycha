@@ -45,13 +45,6 @@ function ProductSection({ specialOffersRef, dishesRef, dessertsRef, drinksRef })
 
   return (
     <>
-      <div ref={specialOffersRef}>
-        <ProductModule
-          title={Titles.specialOffers}
-          products={products.specialOffers}
-          titleColor="red"
-        />
-      </div>
       <div ref={dishesRef}>
         <ProductModule
           title={Titles.dishes}
