@@ -9,20 +9,12 @@ import java.util.stream.Collectors;
 public class OrderRequest {
 
     private Client client;
-    private Orders.Status status;
+    private String status;
     private List<Long> dishesIds;
     private List<Long> drinksIds;
     private List<Long> desertsIds;
 
     public OrderRequest() {}
-
-    public OrderRequest(Orders order) {
-        this.client = order.getClient();
-        this.status = order.getStatus();
-        this.dishesIds = order.getDishes().stream().map(dish -> dish.getId()).collect(Collectors.toList());
-        this.drinksIds = order.getDrinks().stream().map(drink -> drink.getId()).collect(Collectors.toList());
-        this.desertsIds = order.getDeserts().stream().map(desert -> desert.getId()).collect(Collectors.toList());
-    }
 
     public Client getClient() {
         return client;
@@ -32,11 +24,11 @@ public class OrderRequest {
         this.client = client;
     }
 
-    public Orders.Status getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(Orders.Status status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 

@@ -8,6 +8,7 @@ import com.test_task.restaurant.repositories.*;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class OrdersService {
@@ -32,10 +33,16 @@ public class OrdersService {
 
     public Orders createOrder(OrderRequest request) {
 
-        Client client = clientRepository.findByContact("+" + request.getClient().getContact())
-                .orElseThrow(() -> new ResourceNotFoundException("Not found client with such contact "
-                        + request.getClient().getContact()));
-
+        Client client = null;
+        Optional<Client> findClient = clientRepository.findByContact("+" + request.getClient().getContact());
+        if (findClient.isPresent()) {
+            client = findClient.get();
+        } else {
+            client = new Client();
+            client.setName(request.getClient().getName());
+            client.setContact(request.getClient().getContact());
+            clientRepository.save(client);
+        }
 
         List<Dish> dishes = dishService.findDishesByIds(request.getDishesIds());
 
@@ -47,7 +54,18 @@ public class OrdersService {
 
         Orders order = new Orders();
         order.setClient(client);
-        order.setStatus(request.getStatus());
+        order.setStatus(
+                Optional.of(request.getStatus().toLowerCase())
+                        .map(s -> switch (s) {
+                            case "accepted" -> Orders.Status.ACCEPTED;
+                            case "delivered" -> Orders.Status.DELIVERED;
+                            case "delivering" -> Orders.Status.DELIVERING;
+                            case "cooking" -> Orders.Status.COOKING;
+                            default -> throw new IllegalArgumentException("Unknown status: " + s);
+                        })
+                        .orElseThrow(() -> new IllegalArgumentException("Status cannot be null"))
+        );
+
         order.setDishes(dishes);
         order.setDrinks(drinks);
         order.setDeserts(deserts);
