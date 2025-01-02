@@ -8,7 +8,6 @@ import com.test_task.restaurant.repositories.*;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class OrdersService {
@@ -44,6 +43,7 @@ public class OrdersService {
             clientRepository.save(client);
         }
 
+
         List<Dish> dishes = dishService.findDishesByIds(request.getDishesIds());
 
         List<Drink> drinks = drinkService.findDrinksByIds(request.getDrinksIds());
@@ -54,6 +54,7 @@ public class OrdersService {
 
         Orders order = new Orders();
         order.setClient(client);
+
         order.setStatus(
                 Optional.of(request.getStatus().toLowerCase())
                         .map(s -> switch (s) {
@@ -65,6 +66,7 @@ public class OrdersService {
                         })
                         .orElseThrow(() -> new IllegalArgumentException("Status cannot be null"))
         );
+
 
         order.setDishes(dishes);
         order.setDrinks(drinks);
