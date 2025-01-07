@@ -40,7 +40,7 @@ public class OrdersService {
         } else {
             client = new Client();
             client.setName(request.getClient().getName());
-            client.setContact(request.getClient().getContact());
+            client.setContact("+" + request.getClient().getContact());
             clientRepository.save(client);
         }
 
@@ -91,7 +91,7 @@ public class OrdersService {
             default:
                 throw new ResourceNotFoundException("Not found such status");
         }
-        return order;
+        return ordersRepository.save(order);
     }
 
     private double calculateTotalCost(List<Dish> dishes, List<Drink> drinks, List<Desert> deserts) {
