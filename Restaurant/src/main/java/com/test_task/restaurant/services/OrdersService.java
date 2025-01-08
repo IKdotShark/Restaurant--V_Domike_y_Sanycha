@@ -45,9 +45,7 @@ public class OrdersService {
         }
 
         List<Dish> dishes = dishService.findDishesByIds(request.getDishesIds());
-
         List<Drink> drinks = drinkService.findDrinksByIds(request.getDrinksIds());
-
         List<Desert> deserts = desertService.findDesertsByIds(request.getDesertsIds());
 
         double totalCost = calculateTotalCost(dishes, drinks, deserts);
@@ -65,7 +63,6 @@ public class OrdersService {
                         })
                         .orElseThrow(() -> new IllegalArgumentException("Status cannot be null"))
         );
-
         order.setDishes(dishes);
         order.setDrinks(drinks);
         order.setDeserts(deserts);

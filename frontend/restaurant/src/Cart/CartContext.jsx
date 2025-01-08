@@ -1,19 +1,27 @@
-import React, { createContext, useState, useContext } from "react";
+import React, { createContext, useState, useContext, useEffect } from "react";
 
 const CartContext = createContext();
 
 export const useCart = () => useContext(CartContext);
 
 export const CartProvider = ({ children }) => {
-  const [cartItems, setCartItems] = useState([]);
+  const [cartItems, setCartItems] = useState(() => {
+    // Инициализация состояния из LocalStorage
+    const savedCart = localStorage.getItem("cartItems");
+    return savedCart ? JSON.parse(savedCart) : [];
+  });
+
+  // Сохранение корзины в LocalStorage при изменении cartItems
+  useEffect(() => {
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+  }, [cartItems]);
 
   const addToCart = (item) => {
     setCartItems((prevItems) => {
-      // Ищем товар по id и category
       const index = prevItems.findIndex(
         (cartItem) => cartItem.id === item.id && cartItem.category === item.category
       );
-  
+
       if (index !== -1) {
         const updatedItems = [...prevItems];
         updatedItems[index] = {
@@ -22,17 +30,17 @@ export const CartProvider = ({ children }) => {
         };
         return updatedItems;
       }
-  
+
       return [...prevItems, { ...item, quantity: 1 }];
     });
   };
-  
+
   const removeFromCart = (id, category) => {
     setCartItems((prevItems) =>
       prevItems.filter((item) => item.id !== id || item.category !== category)
     );
   };
-  
+
   const increaseQuantity = (id, category) => {
     setCartItems((prevItems) =>
       prevItems.map((item) =>
@@ -42,7 +50,7 @@ export const CartProvider = ({ children }) => {
       )
     );
   };
-  
+
   const decreaseQuantity = (id, category) => {
     setCartItems((prevItems) =>
       prevItems.map((item) =>
@@ -52,7 +60,6 @@ export const CartProvider = ({ children }) => {
       )
     );
   };
-  
 
   const clearCart = () => {
     setCartItems([]);

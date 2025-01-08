@@ -1,6 +1,7 @@
 package com.test_task.restaurant.services;
 
 import com.test_task.restaurant.exception.ResourceNotFoundException;
+import com.test_task.restaurant.models.Desert;
 import com.test_task.restaurant.models.Dish;
 import com.test_task.restaurant.repositories.DishRepository;
 import org.springframework.stereotype.Service;
