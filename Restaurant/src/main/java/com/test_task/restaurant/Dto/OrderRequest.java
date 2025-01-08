@@ -1,10 +1,8 @@
 package com.test_task.restaurant.Dto;
 
 import com.test_task.restaurant.models.Client;
-import com.test_task.restaurant.models.Orders;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class OrderRequest {
 

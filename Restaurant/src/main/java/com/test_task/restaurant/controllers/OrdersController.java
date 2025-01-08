@@ -3,7 +3,6 @@ package com.test_task.restaurant.controllers;
 import com.test_task.restaurant.Dto.OrderRequest;
 import com.test_task.restaurant.Dto.StatusRequest;
 import com.test_task.restaurant.models.Orders;
-import com.test_task.restaurant.models.Orders.Status;
 import com.test_task.restaurant.services.OrdersService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

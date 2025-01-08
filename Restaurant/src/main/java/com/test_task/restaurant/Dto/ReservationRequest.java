@@ -1,7 +1,5 @@
 package com.test_task.restaurant.Dto;
 
-import java.time.LocalDateTime;
-
 public class ReservationRequest {
 
     private String name;
