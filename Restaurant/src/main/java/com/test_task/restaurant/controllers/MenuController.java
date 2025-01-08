@@ -1,8 +1,5 @@
 package com.test_task.restaurant.controllers;
 
-import com.test_task.restaurant.models.Desert;
-import com.test_task.restaurant.models.Dish;
-import com.test_task.restaurant.models.Drink;
 import com.test_task.restaurant.models.Menu;
 import com.test_task.restaurant.services.MenuService;
 import com.test_task.restaurant.services.DishService;
