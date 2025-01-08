@@ -63,6 +63,7 @@ function Cart() {
     return (
       fullName.trim() && // Проверка полного имени
       formData.phone.trim() &&
+      formData.email.trim() &&
       (deliveryType === "carryout" || (deliveryType === "delivery" && formData.address.trim()))
     );
   };
@@ -244,7 +245,7 @@ function Cart() {
                   />
                 </label>
                 <label>
-                  Email:
+                  Email*:
                   <input
                     type="text"
                     placeholder="email@mail.com"

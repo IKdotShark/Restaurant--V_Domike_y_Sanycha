@@ -1,3 +1,11 @@
+export const Titles = {
+  specialOffers: 'Специальные предложения',
+  dishes: 'Блюда',
+  desserts: 'Десерты',
+  drinks: 'Напитки',
+  reservations: 'Забронировать стол',
+};
+
 export const Images = {
     logo: './src/assets/logo_text.png',
     burger: './src/assets/burger.png',

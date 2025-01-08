@@ -2,9 +2,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import ProductModule from "./ProductModule";
-import { Titles, IDs } from "./productData";
+import { Titles } from "../Header/headerData";
 
-function ProductSection({ specialOffersRef, dishesRef, dessertsRef, drinksRef }) {
+function ProductSection({ dishesRef, dessertsRef, drinksRef }) {
   const [products, setProducts] = useState({
     specialOffers: [],
     dishes: [],
@@ -21,7 +21,7 @@ function ProductSection({ specialOffersRef, dishesRef, dessertsRef, drinksRef })
       setError(null);
 
       try {
-        const response = await axios.get("http://localhost:8080/api/menu/1");
+        const response = await axios.get("http://localhost:8080/api/menu/2");
         
         setProducts({
           specialOffers: response.data.specialOffers || [],

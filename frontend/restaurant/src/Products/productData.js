@@ -1,10 +1,3 @@
-export const Titles = {
-  specialOffers: 'Специальные предложения',
-  dishes: 'Блюда',
-  desserts: 'Десерты',
-  drinks: 'Напитки',
-};
-
 export const IDs = {
     dishesIds: [1],  // Пример ID блюд
     drinksIds: [1, 2],  // Пример ID напитков
