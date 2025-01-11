@@ -34,17 +34,18 @@ public class OrdersService {
     public Orders createOrder(OrderRequest request) {
 
         Client client = clientRepository.findByContact("+" + request.getClient().getContact())
+                .or(() -> clientRepository.findByContact(request.getClient().getContact()))
                 .orElseGet(() -> {
                     Client newClient = new Client();
                     Optional.ofNullable(request.getClient().getName()).ifPresent(newClient::setName);
                     Optional.ofNullable(request.getClient().getContact())
-                            .map(contact -> "+" + contact)
+                            .map(contact -> contact.startsWith("+") ? contact : "+" + contact)
                             .ifPresent(newClient::setContact);
                     Optional.ofNullable(request.getClient().getEmail()).ifPresent(newClient::setEmail);
                     Optional.ofNullable(request.getClient().getAdress()).ifPresent(newClient::setAdress);
-                    clientRepository.save(newClient);
-                    return newClient;
+                    return clientRepository.save(newClient);
                 });
+
 
         List<Dish> dishes = dishService.findDishesByIds(request.getDishesIds());
 

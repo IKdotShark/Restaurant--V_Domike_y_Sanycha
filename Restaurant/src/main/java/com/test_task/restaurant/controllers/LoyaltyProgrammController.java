@@ -57,12 +57,13 @@ public class LoyaltyProgrammController {
             loyaltyProgramm.setBonusCard(bonusCard);
         }
 
-        LoyaltyProgramm createdLoyaltyProgramm = loyaltyProgrammService.createLoyaltyProgram(loyaltyProgramm);
         Client client = clientService.findClientById(client_id);
 
         if (client.getBonusCard() != null) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("У тебя уже есть карта Еблан!!!");
         }
+
+        LoyaltyProgramm createdLoyaltyProgramm = loyaltyProgrammService.createLoyaltyProgram(loyaltyProgramm);
 
         client.setBonusCard(createdLoyaltyProgramm);
         Client savedClient = clientService.saveClient(client);

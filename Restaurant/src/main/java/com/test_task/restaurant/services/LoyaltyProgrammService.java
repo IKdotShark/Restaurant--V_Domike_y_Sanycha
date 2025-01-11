@@ -29,10 +29,13 @@ public class LoyaltyProgrammService {
     }
 
     public LoyaltyProgramm createLoyaltyProgram(CreateCardByPhoneRequest createCardByPhoneRequest) {
-        Optional<Client> foundClient = clientRepository.findByContact("+" + createCardByPhoneRequest.getPhoneNumber());
+        Optional<Client> foundClient = clientRepository.findByContact("+" + createCardByPhoneRequest.getPhoneNumber())
+                .or(() -> clientRepository.findByContact(createCardByPhoneRequest.getPhoneNumber()));
+
         if (foundClient.isEmpty()) {
             throw new RuntimeException("Тебя здесь нет, долбоеб!");
         }
+
         Client client = foundClient.get();
 
         if (client.getBonusCard() != null) {
