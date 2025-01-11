@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import styles from "./header.module.css";
 import { Images, Texts } from './headerData';
-import { Titles } from '../Products/productData';
+import { Titles } from './headerData';
 
 function Header({ scrollToSection, refs }) {
   const [isMenuOpen, setMenuOpen] = useState(false);
@@ -54,6 +54,9 @@ function Header({ scrollToSection, refs }) {
               </li>
               <li onClick={() => { toggleMenu(); scrollToSection(refs.drinksRef); }}>
                 {Titles.drinks}
+              </li>
+              <li onClick={() => { toggleMenu(); scrollToSection(refs.reservationRef); }}>
+                {Titles.reservations}
               </li>
             </ul>
           </div>

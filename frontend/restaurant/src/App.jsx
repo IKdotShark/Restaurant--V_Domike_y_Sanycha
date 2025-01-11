@@ -5,12 +5,14 @@ import Logo from "./Logo/Logo";
 import ProductSection from "./Products/ProductSection"; // Импортируем новый компонент
 import { CartProvider } from "./Cart/CartContext";
 import Cart from "./Cart/Cart";
+import ReservationMap from "./Table/ReservationMap";
 
 function App() {
   const specialOffersRef = useRef(null);
   const dishesRef = useRef(null);
   const dessertsRef = useRef(null);
   const drinksRef = useRef(null);
+  const reservationRef = useRef(null); // Добавлено
 
   const HEADER_HEIGHT = 128;
 
@@ -31,6 +33,7 @@ function App() {
           dishesRef,
           dessertsRef,
           drinksRef,
+          reservationRef, // Передано в Header
         }}
       />
       <Logo />
@@ -42,6 +45,9 @@ function App() {
           drinksRef={drinksRef}
         />
         <Cart />
+      </div>
+      <div ref={reservationRef}>
+        <ReservationMap />
       </div>
       <Footer />
     </CartProvider>
