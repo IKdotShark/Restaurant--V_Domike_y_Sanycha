@@ -1,6 +1,9 @@
 package com.test_task.restaurant.models;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -19,6 +22,7 @@ public class Orders {
 
     @ManyToOne
     @JoinColumn(name = "client_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Client client;
 
     @ManyToMany

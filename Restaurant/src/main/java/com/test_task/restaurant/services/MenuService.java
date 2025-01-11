@@ -1,5 +1,8 @@
 package com.test_task.restaurant.services;
 
+import com.test_task.restaurant.Dto.DesertRequest;
+import com.test_task.restaurant.Dto.DishRequest;
+import com.test_task.restaurant.Dto.DrinkRequest;
 import com.test_task.restaurant.exception.ResourceNotFoundException;
 import com.test_task.restaurant.models.Desert;
 import com.test_task.restaurant.models.Dish;
@@ -39,35 +42,51 @@ public class MenuService {
         return menuRepository.findAll();
     }
 
-    public List<Menu> findAllItemsByCategory(String category) {
+    public Object findAllItemsByCategory(String category) {
         if (category == null) {
             return findAllMenus();
         }
 
         return switch (category.toLowerCase()) {
-            case "dishes" -> findMenusWithDishes();
-            case "drinks" -> findMenusWithDrinks();
-            case "deserts" -> findMenusWithDeserts();
+            case "dish" -> findMenusWithDishes();
+            case "drink" -> findMenusWithDrinks();
+            case "desert" -> findMenusWithDeserts();
             default -> findAllMenus();
         };
     }
 
-    private List<Menu> findMenusWithDishes() {
-        return findAllMenus().stream()
+    private DishRequest findMenusWithDishes() {
+        List<Dish> dishes = findAllMenus().stream()
                 .filter(menu -> !menu.getDishes().isEmpty())
+                .flatMap(menu -> menu.getDishes().stream())
                 .collect(Collectors.toList());
+
+        DishRequest dishRequest = new DishRequest();
+        dishRequest.setDishList(dishes);
+        return dishRequest;
     }
 
-    private List<Menu> findMenusWithDrinks() {
-        return findAllMenus().stream()
+
+    private DrinkRequest findMenusWithDrinks() {
+        List<Drink> drinks = findAllMenus().stream()
                 .filter(menu -> !menu.getDrinks().isEmpty())
+                .flatMap(menu -> menu.getDrinks().stream())
                 .collect(Collectors.toList());
+
+        DrinkRequest drinkRequest = new DrinkRequest();
+        drinkRequest.setDrinkList(drinks);
+        return drinkRequest;
     }
 
-    private List<Menu> findMenusWithDeserts() {
-        return findAllMenus().stream()
+    private DesertRequest findMenusWithDeserts() {
+        List<Desert> deserts = findAllMenus().stream()
                 .filter(menu -> !menu.getDeserts().isEmpty())
+                .flatMap(menu -> menu.getDeserts().stream())
                 .collect(Collectors.toList());
+
+        DesertRequest desertRequest = new DesertRequest();
+        desertRequest.setDesertList(deserts);
+        return desertRequest;
     }
 
     public void settingMenuId(Menu menu) {

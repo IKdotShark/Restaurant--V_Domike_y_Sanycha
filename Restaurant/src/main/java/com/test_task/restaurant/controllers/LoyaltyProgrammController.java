@@ -1,5 +1,6 @@
 package com.test_task.restaurant.controllers;
 
+import com.test_task.restaurant.Dto.CreateCardByPhoneRequest;
 import com.test_task.restaurant.models.Client;
 import com.test_task.restaurant.models.LoyaltyProgramm;
 import com.test_task.restaurant.services.ClientService;
@@ -41,6 +42,12 @@ public class LoyaltyProgrammController {
         return ResponseEntity.ok(loyaltyProgrammService.findByCardNumber(cardNumber));
     }
 
+    @PostMapping()
+    public ResponseEntity<Client> createLP(@RequestBody CreateCardByPhoneRequest createCardByPhoneRequest) {
+        LoyaltyProgramm createdLP = loyaltyProgrammService.createLoyaltyProgram(createCardByPhoneRequest);
+        return ResponseEntity.status(HttpStatus.CREATED).body(clientService.findClientByBonusCardId(createdLP.getId()));
+    }
+
     @PostMapping("/{client_id}")
     public ResponseEntity<Client> createLP(@RequestBody LoyaltyProgramm loyaltyProgramm,
                                            @PathVariable Long client_id) {
@@ -56,6 +63,8 @@ public class LoyaltyProgrammController {
         Client savedClient = clientService.saveClient(client);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedClient);
     }
+
+
 
     @PostMapping("/add-balance/{id}")
     public ResponseEntity<LoyaltyProgramm> addBalance(@PathVariable Long id, @RequestParam double amount) {

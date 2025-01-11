@@ -1,5 +1,8 @@
 package com.test_task.restaurant.controllers;
 
+import com.test_task.restaurant.Dto.DesertRequest;
+import com.test_task.restaurant.Dto.DishRequest;
+import com.test_task.restaurant.Dto.DrinkRequest;
 import com.test_task.restaurant.models.Menu;
 import com.test_task.restaurant.services.MenuService;
 import com.test_task.restaurant.services.DishService;
@@ -35,14 +38,30 @@ public class MenuController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Menu>> getAllMenuByCategory(@RequestParam(required = false) String category) {
-        List<Menu> menus = menuService.findAllItemsByCategory(category);
+    public ResponseEntity<?> getAllMenuByCategory(@RequestParam(required = false) String category) {
+        Object result = menuService.findAllItemsByCategory(category);
 
-        if (menus.isEmpty()) {
-            return ResponseEntity.noContent().build();
+        if (result instanceof List<?> menus) {
+            if (menus.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(menus);
         }
 
-        return ResponseEntity.ok(menus);
+        if (result instanceof DishRequest dishRequest) {
+            return ResponseEntity.ok(dishRequest);
+        }
+
+        if (result instanceof DrinkRequest drinkRequest) {
+            return ResponseEntity.ok(drinkRequest);
+        }
+
+        if (result instanceof DesertRequest desertRequest) {
+            return ResponseEntity.ok(desertRequest);
+        }
+
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body("Unexpected result type");
     }
 
     @PostMapping

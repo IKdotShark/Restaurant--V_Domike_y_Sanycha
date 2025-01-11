@@ -1,9 +1,11 @@
 package com.test_task.restaurant.Dto;
 
 import com.test_task.restaurant.models.Client;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.util.List;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class OrderRequest {
 
     private Client client;

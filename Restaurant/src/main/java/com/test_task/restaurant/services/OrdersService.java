@@ -33,19 +33,23 @@ public class OrdersService {
 
     public Orders createOrder(OrderRequest request) {
 
-        Client client = null;
-        Optional<Client> findClient = clientRepository.findByContact("+" + request.getClient().getContact());
-        if (findClient.isPresent()) {
-            client = findClient.get();
-        } else {
-            client = new Client();
-            client.setName(request.getClient().getName());
-            client.setContact("+" + request.getClient().getContact());
-            clientRepository.save(client);
-        }
+        Client client = clientRepository.findByContact("+" + request.getClient().getContact())
+                .orElseGet(() -> {
+                    Client newClient = new Client();
+                    Optional.ofNullable(request.getClient().getName()).ifPresent(newClient::setName);
+                    Optional.ofNullable(request.getClient().getContact())
+                            .map(contact -> "+" + contact)
+                            .ifPresent(newClient::setContact);
+                    Optional.ofNullable(request.getClient().getEmail()).ifPresent(newClient::setEmail);
+                    Optional.ofNullable(request.getClient().getAdress()).ifPresent(newClient::setAdress);
+                    clientRepository.save(newClient);
+                    return newClient;
+                });
 
         List<Dish> dishes = dishService.findDishesByIds(request.getDishesIds());
+
         List<Drink> drinks = drinkService.findDrinksByIds(request.getDrinksIds());
+
         List<Desert> deserts = desertService.findDesertsByIds(request.getDesertsIds());
 
         double totalCost = calculateTotalCost(dishes, drinks, deserts);
@@ -63,6 +67,7 @@ public class OrdersService {
                         })
                         .orElseThrow(() -> new IllegalArgumentException("Status cannot be null"))
         );
+
         order.setDishes(dishes);
         order.setDrinks(drinks);
         order.setDeserts(deserts);
