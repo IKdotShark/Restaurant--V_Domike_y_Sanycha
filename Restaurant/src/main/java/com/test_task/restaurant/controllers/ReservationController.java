@@ -1,5 +1,7 @@
 package com.test_task.restaurant.controllers;
 
+import com.test_task.restaurant.Dto.ReservationRequest;
+import com.test_task.restaurant.Dto.ReservationUpdateRequest;
 import com.test_task.restaurant.models.Reservation;
 import com.test_task.restaurant.services.ReservationService;
 import org.springframework.http.HttpStatus;
@@ -30,14 +32,15 @@ public class ReservationController {
     }
 
     @PostMapping
-    public ResponseEntity<Reservation> createReservation(@RequestBody Reservation reservation) {
-        Reservation createdReservation = reservationService.createReservation(reservation);
+    public ResponseEntity<Reservation> createReservation(@RequestBody ReservationRequest reservationRequest) {
+        Reservation createdReservation = reservationService.createReservation(reservationRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdReservation);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Reservation> updateReservation(@PathVariable Long id, @RequestBody Reservation reservation) {
-        Reservation updatedReservation = reservationService.updateReservation(id, reservation);
+    public ResponseEntity<Reservation> updateReservation(@PathVariable Long id,
+                                                         @RequestBody ReservationUpdateRequest reservationUpdateRequest) {
+        Reservation updatedReservation = reservationService.updateReservation(id, reservationUpdateRequest);
         return ResponseEntity.ok(updatedReservation);
     }
 

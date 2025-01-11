@@ -5,9 +5,6 @@ import com.test_task.restaurant.models.Desert;
 import com.test_task.restaurant.models.Dish;
 import com.test_task.restaurant.models.Drink;
 import com.test_task.restaurant.models.Menu;
-import com.test_task.restaurant.repositories.DesertRepository;
-import com.test_task.restaurant.repositories.DishRepository;
-import com.test_task.restaurant.repositories.DrinkRepository;
 import com.test_task.restaurant.repositories.MenuRepository;
 import org.springframework.stereotype.Service;
 
@@ -83,17 +80,39 @@ public class MenuService {
         deserts.forEach(desert -> desert.setMenuId(menu.getId() != null ? menu.getId() : 1L));
     }
 
+
+    public Menu menuIdAdder(Menu menuInfo, Menu menu) {
+        if (menuInfo.getDishesIds() != null) {
+            mergeCollections(menu.getDishesIds(), menuInfo.getDishesIds());
+        }
+
+        if (menuInfo.getDrinksIds() != null) {
+            mergeCollections(menu.getDrinksIds(), menuInfo.getDrinksIds());
+        }
+
+        if (menuInfo.getDesertsIds() != null) {
+            mergeCollections(menu.getDesertsIds(), menuInfo.getDesertsIds());
+        }
+
+        return menu;
+    }
+    public Menu updateMenu(Menu menu) {
+        return saveOrUpdateMenu(menu);
+    }
+
     public Menu createMenu(Menu menuRequest) {
-
-        List<Long> dishesIds = menuRequest.getDishesIds();
-        List<Long> drinksIds = menuRequest.getDrinksIds();
-        List<Long> desertsIds = menuRequest.getDesertsIds();
-
         Menu menu = Menu.getInstance();
+        menu.setDishesIds(menuRequest.getDishesIds());
+        menu.setDrinksIds(menuRequest.getDrinksIds());
+        menu.setDesertsIds(menuRequest.getDesertsIds());
 
-        menu.setDishesIds(dishesIds);
-        menu.setDrinksIds(drinksIds);
-        menu.setDesertsIds(desertsIds);
+        return saveOrUpdateMenu(menu);
+    }
+
+    private Menu saveOrUpdateMenu(Menu menu) {
+        List<Long> dishesIds = menu.getDishesIds();
+        List<Long> drinksIds = menu.getDrinksIds();
+        List<Long> desertsIds = menu.getDesertsIds();
 
         menu.setDishes(dishService.findDishesByIds(dishesIds));
         menu.setDrinks(drinkService.findDrinksByIds(drinksIds));
@@ -127,5 +146,10 @@ public class MenuService {
                 desert.setTransientIngredients(ingredientsList);
             }
         });
+    }
+
+    private <T> void mergeCollections(List<T> existing, List<T> updates) {
+        existing.clear();
+        existing.addAll(updates);
     }
 }

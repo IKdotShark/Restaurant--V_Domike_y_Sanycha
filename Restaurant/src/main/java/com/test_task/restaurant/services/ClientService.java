@@ -3,8 +3,6 @@ package com.test_task.restaurant.services;
 import com.test_task.restaurant.exception.ResourceNotFoundException;
 import com.test_task.restaurant.models.Client;
 import com.test_task.restaurant.repositories.ClientRepository;
-import jakarta.persistence.EntityManager;
-import org.hibernate.Hibernate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

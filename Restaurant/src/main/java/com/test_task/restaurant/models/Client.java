@@ -1,6 +1,5 @@
 package com.test_task.restaurant.models;
 
-import jakarta.annotation.Resource;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -12,7 +11,7 @@ public class Client {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column()
     private String name;
 
     @Column(nullable = false, unique = true)

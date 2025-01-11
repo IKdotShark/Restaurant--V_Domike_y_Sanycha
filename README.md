@@ -20,5 +20,9 @@ mvn clean install
 mvn spring-boot:run
 ```
 
-> [!Note]
-> Soon will be how to run by jar file
+## Front end
+```bash
+cd Restaurant-V_Domike_y_Sanycha/frontend/restaurant/
+npm install
+npm run dev
+```
