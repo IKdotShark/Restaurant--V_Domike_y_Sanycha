@@ -34,6 +34,11 @@ public class LoyaltyProgrammService {
             throw new RuntimeException("Тебя здесь нет, долбоеб!");
         }
         Client client = foundClient.get();
+
+        if (client.getBonusCard() != null) {
+            throw new RuntimeException("У тебя уже есть карта, Еблан!!!");
+        }
+
         LoyaltyProgramm loyaltyProgramm = new LoyaltyProgramm();
         client.setBonusCard(loyaltyProgramm);
         loyaltyProgramm.setBonusCard(generateBonusCardNumber());

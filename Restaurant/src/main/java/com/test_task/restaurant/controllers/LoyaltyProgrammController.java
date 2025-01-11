@@ -43,13 +43,13 @@ public class LoyaltyProgrammController {
     }
 
     @PostMapping()
-    public ResponseEntity<Client> createLP(@RequestBody CreateCardByPhoneRequest createCardByPhoneRequest) {
+    public ResponseEntity<?> createLP(@RequestBody CreateCardByPhoneRequest createCardByPhoneRequest) {
         LoyaltyProgramm createdLP = loyaltyProgrammService.createLoyaltyProgram(createCardByPhoneRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(clientService.findClientByBonusCardId(createdLP.getId()));
     }
 
     @PostMapping("/{client_id}")
-    public ResponseEntity<Client> createLP(@RequestBody LoyaltyProgramm loyaltyProgramm,
+    public ResponseEntity<?> createLP(@RequestBody LoyaltyProgramm loyaltyProgramm,
                                            @PathVariable Long client_id) {
 
         if (loyaltyProgramm.getBonusCard() == null) {
@@ -59,6 +59,11 @@ public class LoyaltyProgrammController {
 
         LoyaltyProgramm createdLoyaltyProgramm = loyaltyProgrammService.createLoyaltyProgram(loyaltyProgramm);
         Client client = clientService.findClientById(client_id);
+
+        if (client.getBonusCard() != null) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("У тебя уже есть карта Еблан!!!");
+        }
+
         client.setBonusCard(createdLoyaltyProgramm);
         Client savedClient = clientService.saveClient(client);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedClient);
