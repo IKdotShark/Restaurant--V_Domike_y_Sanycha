@@ -15,13 +15,21 @@ function App() {
   const reservationRef = useRef(null); // Добавлено
 
   const HEADER_HEIGHT = 128;
+  const HEADER_HEIGHT_2 = 188;
 
   const scrollToSection = (ref) => {
     const sectionPosition = ref.current.offsetTop;
+    if (window.innerWidth > 540) {
     window.scrollTo({
       top: sectionPosition - HEADER_HEIGHT,
       behavior: "smooth",
     });
+    } else {
+      window.scrollTo({
+        top: sectionPosition - HEADER_HEIGHT_2,
+        behavior: "smooth",
+      });
+    }
   };
 
   return (

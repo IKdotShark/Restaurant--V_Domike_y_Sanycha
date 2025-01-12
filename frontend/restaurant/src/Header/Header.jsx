@@ -3,12 +3,23 @@ import React, { useState } from 'react';
 import styles from "./header.module.css";
 import { Images, Texts } from './headerData';
 import { Titles } from './headerData';
+import LoyaltyModal from "../LoyaltyModal/LoyaltyModal";
 
 function Header({ scrollToSection, refs }) {
   const [isMenuOpen, setMenuOpen] = useState(false);
+  const [isLoyaltyModalOpen, setLoyaltyModalOpen] = useState(false);
 
   const toggleMenu = () => {
     setMenuOpen((prev) => !prev);
+  };
+
+  const openLoyaltyModal = () => {
+    setLoyaltyModalOpen(true);
+    toggleMenu(); // Закрываем меню после клика
+  };
+
+  const closeLoyaltyModal = () => {
+    setLoyaltyModalOpen(false);
   };
 
   const logoClick = () => {
@@ -29,7 +40,6 @@ function Header({ scrollToSection, refs }) {
           <p className={styles.header_text}>{Texts.phone}</p>
           <p className={styles.header_text}>{Texts.delivery}</p>
         </div>
-        {/* Бургер-кнопка, изменяющаяся на крестик */}
         <img
           onClick={toggleMenu}
           className={styles.header_burger}
@@ -38,7 +48,6 @@ function Header({ scrollToSection, refs }) {
         />
       </header>
 
-      {/* Оверлей меню */}
       {isMenuOpen && (
         <div className={styles.overlay} onClick={toggleMenu}>
           <div
@@ -58,10 +67,15 @@ function Header({ scrollToSection, refs }) {
               <li onClick={() => { toggleMenu(); scrollToSection(refs.reservationRef); }}>
                 {Titles.reservations}
               </li>
+              <li onClick={openLoyaltyModal} className={styles.loyaltyProgramm}>
+                {Titles.loyaltyProgramm}
+              </li>
             </ul>
           </div>
         </div>
       )}
+
+      <LoyaltyModal isOpen={isLoyaltyModalOpen} onClose={closeLoyaltyModal} />
     </>
   );
 }
