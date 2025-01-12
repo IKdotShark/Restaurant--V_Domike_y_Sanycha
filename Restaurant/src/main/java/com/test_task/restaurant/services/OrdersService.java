@@ -49,6 +49,10 @@ public class OrdersService {
                     return clientRepository.save(newClient);
                 });
 
+        if (request.getClient().getAdress() != null && client.getAdress() == null) {
+            client.setAdress(request.getClient().getAdress());
+            clientRepository.save(client);
+        }
 
         List<Dish> dishes = dishService.findDishesByIds(request.getDishesIds());
 
