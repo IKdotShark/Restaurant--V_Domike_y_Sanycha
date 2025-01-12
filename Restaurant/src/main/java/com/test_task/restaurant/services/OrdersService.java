@@ -18,17 +18,20 @@ public class OrdersService {
     private final DishService dishService;
     private final DrinkService drinkService;
     private final DesertService desertService;
+    private final EmployeeService employeeService;
 
     public OrdersService(OrdersRepository ordersRepository,
                          ClientRepository clientRepository,
                          DishService dishService,
                          DrinkService drinkService,
-                         DesertService desertService) {
+                         DesertService desertService,
+                         EmployeeService employeeService) {
         this.ordersRepository = ordersRepository;
         this.clientRepository = clientRepository;
         this.dishService = dishService;
         this.drinkService = drinkService;
         this.desertService = desertService;
+        this.employeeService = employeeService;
     }
 
     public Orders createOrder(OrderRequest request) {
@@ -53,6 +56,8 @@ public class OrdersService {
 
         List<Desert> deserts = desertService.findDesertsByIds(request.getDesertsIds());
 
+        List<Employee> employees = employeeService.findEmployeesByIds(request.getEmployeesIds());
+
         double totalCost = calculateTotalCost(dishes, drinks, deserts);
 
         Orders order = new Orders();
@@ -72,6 +77,7 @@ public class OrdersService {
         order.setDishes(dishes);
         order.setDrinks(drinks);
         order.setDeserts(deserts);
+        order.setEmployees(employees);
         order.setTotalCost(totalCost);
 
         return ordersRepository.save(order);

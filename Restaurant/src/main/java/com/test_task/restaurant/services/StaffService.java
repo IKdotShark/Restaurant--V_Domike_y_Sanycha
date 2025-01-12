@@ -1,7 +1,9 @@
 package com.test_task.restaurant.services;
 
 import com.test_task.restaurant.exception.ResourceNotFoundException;
+import com.test_task.restaurant.models.Employee;
 import com.test_task.restaurant.models.Staff;
+import com.test_task.restaurant.repositories.EmployeeRepository;
 import com.test_task.restaurant.repositories.StaffRepository;
 import org.springframework.stereotype.Service;
 
@@ -12,12 +14,19 @@ import java.util.Optional;
 public class StaffService {
 
     private final StaffRepository staffRepository;
+    private final EmployeeRepository employeeRepository;
 
-    public StaffService(StaffRepository staffRepository) {
+    public StaffService(StaffRepository staffRepository, EmployeeRepository employeeRepository) {
         this.staffRepository = staffRepository;
+        this.employeeRepository = employeeRepository;
     }
 
     public Staff createStaff(Staff staff) {
+        Optional<Employee> employee = employeeRepository.findById(staff.getEmployee().getId());
+        if (employee.isEmpty()) {
+            throw new ResourceNotFoundException("Not found such employee");
+        }
+        staff.setEmployee(employee.get());
         return staffRepository.save(staff);
     }
 

@@ -1,5 +1,7 @@
 package com.test_task.restaurant.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
 import java.util.Set;
 
@@ -15,6 +17,7 @@ public class Employee {
     private StaffRole staffRole;
 
     @ManyToMany(mappedBy = "employees")
+    @JsonIgnore
     private Set<Orders> orders;
 
     public enum StaffRole {

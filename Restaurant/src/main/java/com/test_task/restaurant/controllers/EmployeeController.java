@@ -1,5 +1,6 @@
 package com.test_task.restaurant.controllers;
 
+import com.test_task.restaurant.Dto.EmployeeRequest;
 import com.test_task.restaurant.models.Employee;
 import com.test_task.restaurant.models.Employee.StaffRole;
 import com.test_task.restaurant.services.EmployeeService;
@@ -38,18 +39,14 @@ public class EmployeeController {
     }
 
     @PostMapping()
-    public ResponseEntity<Employee> createEmployee(@RequestBody Employee employee) {
-        Employee createdEmployee = employeeService.createEmployee(employee);
+    public ResponseEntity<Employee> createEmployee(@RequestBody EmployeeRequest employeeRequest) {
+        Employee createdEmployee = employeeService.createEmployee(employeeRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdEmployee);
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<Employee> updateEmployee(@PathVariable Long id, @RequestBody Employee employeeInfo) {
-        Employee employee = employeeService.findEmployeeById(id);
-        if (employeeInfo.getStaffRole() != null) {
-            employee.setStaffRole(employeeInfo.getStaffRole());
-        }
-        Employee updatedEmployee = employeeService.updateEmployee(employee);
+    public ResponseEntity<Employee> updateEmployee(@PathVariable Long id, @RequestBody EmployeeRequest employeeRequest) {
+        Employee updatedEmployee = employeeService.updateEmployee(id, employeeRequest);
         return ResponseEntity.ok(updatedEmployee);
     }
 

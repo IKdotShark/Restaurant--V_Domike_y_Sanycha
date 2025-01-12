@@ -13,6 +13,7 @@ public class OrderRequest {
     private List<Long> dishesIds;
     private List<Long> drinksIds;
     private List<Long> desertsIds;
+    private List<Long> employeesIds;
 
     public OrderRequest() {}
 
@@ -54,5 +55,13 @@ public class OrderRequest {
 
     public void setDesertsIds(List<Long> desertsIds) {
         this.desertsIds = desertsIds;
+    }
+
+    public List<Long> getEmployeesIds() {
+        return employeesIds;
+    }
+
+    public void setEmployeesIds(List<Long> employeesIds) {
+        this.employeesIds = employeesIds;
     }
 }
