@@ -4,6 +4,7 @@ export const Titles = {
   desserts: 'Десерты',
   drinks: 'Напитки',
   reservations: 'Забронировать стол',
+  loyaltyProgramm: 'Программа лояльности',
 };
 
 export const Images = {

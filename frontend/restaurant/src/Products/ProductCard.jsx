@@ -1,10 +1,30 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./ProductCard.module.css";
 import { useCart } from "../Cart/CartContext";
 
 function ProductCard({ product }) {
   const [isModalOpen, setModalOpen] = useState(false);
+  const [isInStock, setIsInStock] = useState(false); // Состояние наличия товара
   const { addToCart } = useCart();
+
+  useEffect(() => {
+    // Проверка наличия товара
+    const checkInventory = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:8080/api/inventory/search?productName=${encodeURIComponent(product.name)}`
+        );
+        const data = await response.json();
+        const productData = data.find((item) => item.productName === product.name);
+        setIsInStock(productData?.quantity > 0);
+      } catch (error) {
+        console.error("Ошибка при проверке наличия товара:", error);
+        setIsInStock(false); // Если запрос не удался, считаем, что товара нет
+      }
+    };
+
+    checkInventory();
+  }, [product.name]);
 
   const handleCardClick = () => {
     setModalOpen(true);
@@ -19,7 +39,6 @@ function ProductCard({ product }) {
     addToCart(product); // Добавляем товар в корзину
   };
 
-  // Логика для отображения ингредиентов или объема
   const renderIngredientsOrVolume = (product) => {
     if (product.volume) {
       return <p className={styles.modalVolume}><strong>Объем:</strong> {product.volume}</p>;
@@ -41,9 +60,13 @@ function ProductCard({ product }) {
         <img src={product.src} alt={product.name} className={styles.image} />
         <h3 className={styles.name}>{product.name}</h3>
         <p className={styles.price}>{product.price} ₽</p>
-        <button className={styles.button} onClick={handleBasketClick}>
-          В корзину
-        </button>
+        {isInStock ? (
+          <button className={styles.button} onClick={handleBasketClick}>
+            В корзину
+          </button>
+        ) : (
+          <span className={styles.outOfStock}>Нет в наличии</span>
+        )}
       </div>
 
       {isModalOpen && (
@@ -60,13 +83,17 @@ function ProductCard({ product }) {
                 <p className={styles.modalDescription}>
                   {product.description || "Описание отсутствует"}
                 </p>
-                {renderIngredientsOrVolume(product)} {/* Выводим ингредиенты или объем */}
+                {renderIngredientsOrVolume(product)}
               </div>
               <p className={styles.price}>{product.price} ₽</p>
               <div className={styles.modalFooter}>
-                <button className={styles.button} onClick={handleBasketClick}>
-                  В корзину
-                </button>
+                {isInStock ? (
+                  <button className={styles.button} onClick={handleBasketClick}>
+                    В корзину
+                  </button>
+                ) : (
+                  <span className={styles.outOfStock}>Нет в наличии</span>
+                )}
                 <button className={styles.button} onClick={handleCloseModal}>
                   Закрыть
                 </button>

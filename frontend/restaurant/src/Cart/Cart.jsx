@@ -89,7 +89,52 @@ function Cart() {
     };
   
     try {
-      const response = await fetch("http://localhost:8080/api/orders", {
+      // Проверка доступности товаров
+      for (const item of cartItems) {
+        const inventoryResponse = await fetch(
+          `http://localhost:8080/api/inventory/search?productName=${encodeURIComponent(item.name)}`
+        );
+        if (!inventoryResponse.ok) {
+          throw new Error("Ошибка при проверке наличия товара.");
+        }
+  
+        const inventoryData = await inventoryResponse.json();
+        const productData = inventoryData.find(
+          (product) => product.productName === item.name
+        );
+  
+        if (!productData || productData.quantity < item.quantity) {
+          setErrorMessage(
+            `Товара "${item.name}" недостаточно на складе. Доступно: ${productData?.quantity || 0}.`
+          );
+          return;
+        }
+  
+        // Обновление количества товара
+        const updateResponse = await fetch(
+          `http://localhost:8080/api/inventory/update/${productData.id}`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              productName: item.name,
+              quantity: productData.quantity - item.quantity,
+              supplier: productData.supplier,
+            }),
+          }
+        );
+  
+        if (!updateResponse.ok) {
+          throw new Error(
+            `Ошибка при обновлении количества товара "${item.name}".`
+          );
+        }
+      }
+  
+      // Отправка заказа
+      const orderResponse = await fetch("http://localhost:8080/api/orders", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -97,7 +142,7 @@ function Cart() {
         body: JSON.stringify(requestData),
       });
   
-      if (!response.ok) {
+      if (!orderResponse.ok) {
         throw new Error("Ошибка при оформлении заказа.");
       }
   
@@ -106,9 +151,10 @@ function Cart() {
       setOrderModalOpen(false);
       setErrorMessage("");
     } catch (error) {
-      setErrorMessage("Не удалось оформить заказ. Попробуйте ещё раз.");
+      setErrorMessage(error.message);
     }
   };
+  
   
   const handlePayment = () => {
     if (!isFormValid()) {
@@ -267,7 +313,7 @@ function Cart() {
                 </label>
                 {deliveryType === "delivery" && (
                   <label>
-                    Адрес:
+                    Адрес*:
                     <input
                       type="text"
                       name="address"
