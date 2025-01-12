@@ -81,6 +81,8 @@ function Cart() {
       client: {
         name: fullName,
         contact: formattedPhone, // Используем обработанный номер телефона
+        email: formData.email.trim(),
+        adress: formData.address.trim() || null
       },
       status: "ACCEPTED",
       dishesIds: expandItems("Dish"),
