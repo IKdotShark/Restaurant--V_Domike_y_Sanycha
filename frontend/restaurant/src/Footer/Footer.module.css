@@ -23,8 +23,58 @@ footer h1{
   margin: 0;
 }
 
-@media screen and (max-width: 602px) {
-  footer h1{
+@media screen and (max-width: 1067px) {
+  .footer h1{
     padding-top: 1rem;
+  }
+}
+
+@media screen and (max-width: 711px) {
+  .footer h1{
+    padding-top: 0.5rem;
+  }
+}
+
+@media screen and (max-width: 667px) {
+  .footer h1{
+    padding-top: 0;
+    font-size: 24px;
+  }
+  .footer p{
+    padding-top: 0;
+    font-size: 16px;
+  }
+}
+
+@media screen and (max-width: 496px) {
+  .footer {
+    height: 33rem;
+  }
+}
+
+@media screen and (max-width: 420px) {
+  .copyright {
+    height: 40px;
+  }
+}
+
+
+@media screen and (max-width: 379px) {
+  .footer {
+    height: 31rem;
+  }
+  .footer h1{
+    padding-top: 0;
+    font-size: 22px;
+  }
+  .footer p{
+    padding-top: 0;
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 319px) {
+  .footer {
+    height: 33rem;
   }
 }

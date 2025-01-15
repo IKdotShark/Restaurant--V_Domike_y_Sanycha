@@ -96,7 +96,7 @@
   }
 }
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 1060px) {
   .header .header_texts {
     justify-content: center;
   }
@@ -127,10 +127,13 @@
   }
 }
 
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 485px) {
   .header .header_text {
     font-size: 14px;
   }
+}
+
+@media screen and (max-width: 400px) {
   .menuList li {
     font-size: 20px;
   }
