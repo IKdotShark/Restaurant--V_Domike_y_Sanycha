@@ -14,7 +14,7 @@ export const Images = {
   };
   
   export const Texts = {
-    address: 'Контакты: ул. Балдёжная, д. 1',
+    address: 'ул. Балдёжная, д. 1',
     phone: '+7 (800) 555-35-35',
     delivery: 'Доставка с 12:00 до 20:00',
   };
