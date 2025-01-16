@@ -79,7 +79,9 @@
 .modalImage {
   flex: 1; /* Занимает 50% ширины */
   border-radius: 12px;
+  aspect-ratio: 1/1;
   object-fit: cover;
+  width: 50%;
 }
 
 .modalContent {
@@ -148,10 +150,11 @@
   }
 }
 
-@media screen and (max-height: 830px) and (max-width: 560px) {
+@media screen and (max-width: 560px) {
   .modalImage {
     height: 35vh;
-    object-fit: contain;
+    width: 100%;
+    object-fit: cover;
   }
   .modal {
     gap: 0;
