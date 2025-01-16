@@ -21,7 +21,7 @@ function ProductSection({ dishesRef, dessertsRef, drinksRef }) {
       setError(null);
 
       try {
-        const response = await axios.get("http://localhost:8080/api/menu/2");
+        const response = await axios.get("http://localhost:8080/api/menu/1");
         
         setProducts({
           specialOffers: response.data.specialOffers || [],
