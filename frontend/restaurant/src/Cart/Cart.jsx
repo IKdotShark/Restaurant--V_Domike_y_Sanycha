@@ -88,6 +88,7 @@ function Cart() {
       dishesIds: expandItems("Dish"),
       drinksIds: expandItems("Drink"),
       desertsIds: expandItems("Desert"),
+      employeesIds: []
     };
   
     try {
