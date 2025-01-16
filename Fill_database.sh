@@ -32,7 +32,7 @@ curl -X POST http://localhost:8080/api/dishes -H "Content-Type: application/json
 curl -X POST http://localhost:8080/api/drinks -H "Content-Type: application/json" -d '{
   "name": "Лимонад классический",
   "price": 120.0,
-  "ingredients": ["Вода", "Лимонный сок", "Сахар", "Лед"],
+  "volume": "500ml",
   "description": "Освежающий домашний лимонад с ярким лимонным вкусом.",
   "category": "Drink",
   "src": "./src/assets/products/lemonade.png"
@@ -41,7 +41,7 @@ curl -X POST http://localhost:8080/api/drinks -H "Content-Type: application/json
 curl -X POST http://localhost:8080/api/drinks -H "Content-Type: application/json" -d '{
   "name": "Капучино",
   "price": 150.0,
-  "ingredients": ["Кофе", "Молоко", "Молочная пенка"],
+  "volume": "200ml",
   "description": "Классический капучино с мягким сливочным вкусом.",
   "category": "Drink",
   "src": "./src/assets/products/cappuccino.png"
@@ -50,7 +50,7 @@ curl -X POST http://localhost:8080/api/drinks -H "Content-Type: application/json
 curl -X POST http://localhost:8080/api/drinks -H "Content-Type: application/json" -d '{
   "name": "Фруктовый смузи",
   "price": 200.0,
-  "ingredients": ["Клубника", "Банан", "Апельсиновый сок"],
+  volume": "400ml",
   "description": "Натуральный фруктовый смузи без добавления сахара.",
   "category": "Drink",
   "src": "./src/assets/products/fruit_smoothie.png"
@@ -84,6 +84,12 @@ curl -X POST http://localhost:8080/api/deserts -H "Content-Type: application/jso
   "src": "./src/assets/products/ice_cream.png"
 }'
 
+# Menu
+curl -X POST http://localhost:8080/api/menu -H "Content-Type: application/json" -d '{
+  "dishesIds": [1,2,3],
+  "drinksIds": [1,2,3],
+  "desertsIds": [1,2,3]
+}'
 
 # Suppliers
 curl -X POST http://localhost:8080/api/suppliers -H "Content-Type: application/json" -d '{
