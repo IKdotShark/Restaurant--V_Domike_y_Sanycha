@@ -50,7 +50,7 @@ curl -X POST http://localhost:8080/api/drinks -H "Content-Type: application/json
 curl -X POST http://localhost:8080/api/drinks -H "Content-Type: application/json" -d '{
   "name": "Фруктовый смузи",
   "price": 200.0,
-  volume": "400ml",
+  "volume": "400ml",
   "description": "Натуральный фруктовый смузи без добавления сахара.",
   "category": "Drink",
   "src": "./src/assets/products/fruit_smoothie.png"
