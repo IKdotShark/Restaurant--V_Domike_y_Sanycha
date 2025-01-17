@@ -95,7 +95,7 @@ function Cart() {
       // Проверка доступности товаров
       for (const item of cartItems) {
         const inventoryResponse = await fetch(
-          `http://178.236.244.137/api/inventory/search?productName=${encodeURIComponent(item.name)}`
+          `http://178.236.244.137:8088/api/inventory/search?productName=${encodeURIComponent(item.name)}`
         );
         if (!inventoryResponse.ok) {
           throw new Error("Ошибка при проверке наличия товара.");
@@ -115,7 +115,7 @@ function Cart() {
   
         // Обновление количества товара
         const updateResponse = await fetch(
-          `http://178.236.244.137/api/inventory/update/${productData.id}`,
+          `http://178.236.244.137:8088/api/inventory/update/${productData.id}`,
           {
             method: "PUT",
             headers: {
@@ -137,7 +137,7 @@ function Cart() {
       }
   
       // Отправка заказа
-      const orderResponse = await fetch("http://178.236.244.137/api/orders", {
+      const orderResponse = await fetch("http://178.236.244.137:8088/api/orders", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

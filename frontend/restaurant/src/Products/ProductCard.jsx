@@ -12,7 +12,7 @@ function ProductCard({ product }) {
     const checkInventory = async () => {
       try {
         const response = await fetch(
-          `http://178.236.244.137/api/inventory/search?productName=${encodeURIComponent(product.name)}`
+          `http://178.236.244.137:8088/api/inventory/search?productName=${encodeURIComponent(product.name)}`
         );
         const data = await response.json();
         const productData = data.find((item) => item.productName === product.name);
