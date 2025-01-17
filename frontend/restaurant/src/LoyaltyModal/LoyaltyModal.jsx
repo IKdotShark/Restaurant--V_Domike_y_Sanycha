@@ -11,7 +11,7 @@ const LoyaltyModal = ({ isOpen, onClose }) => {
   const handleSubmit = async () => {
     if (phoneNumber.trim()) {
       try {
-        const response = await fetch('http://localhost:8080/api/loyalty_program', {
+        const response = await fetch('http://178.236.244.137/api/loyalty_program', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

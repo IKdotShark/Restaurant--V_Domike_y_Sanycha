@@ -62,7 +62,7 @@ const ReservationMap = () => {
     };
   
     try {
-      const response = await fetch("http://localhost:8080/api/reservations", {
+      const response = await fetch("http://178.236.244.137/api/reservations", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
